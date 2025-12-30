@@ -4,6 +4,13 @@ import { Heart } from 'lucide-react';
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
+  const quickLinks = [
+    { label: 'About', id: 'about' },
+    { label: 'Services', id: 'services' },
+    { label: 'Why Us', id: 'why-choose' }, // ✅ FIXED
+    { label: 'Contact', id: 'contact' },
+  ];
+
   return (
     <footer
       style={{
@@ -22,7 +29,7 @@ const Footer = () => {
             marginBottom: '48px',
           }}
         >
-          {/* Brand Section */}
+          {/* Brand */}
           <div>
             <div
               style={{
@@ -31,7 +38,6 @@ const Footer = () => {
                 background: 'linear-gradient(135deg, #2563eb 0%, #8b5cf6 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
                 fontFamily: 'JetBrains Mono, monospace',
                 marginBottom: '16px',
               }}
@@ -64,26 +70,30 @@ const Footer = () => {
                 marginBottom: '20px',
                 letterSpacing: '1px',
                 textTransform: 'uppercase',
-                color: 'var(--text-primary)',
               }}
             >
               Quick Links
             </h4>
+
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              {['About', 'Services', 'Why Us', 'Contact'].map((link) => (
+              {quickLinks.map((link) => (
                 <a
-                  key={link}
-                  href={`#${link.toLowerCase().replace(' ', '-')}`}
+                  key={link.id}
+                  href={`#${link.id}`}
                   style={{
                     color: 'var(--text-secondary)',
                     textDecoration: 'none',
                     fontSize: '16px',
                     transition: 'color 0.3s ease',
                   }}
-                  onMouseEnter={(e) => (e.target.style.color = 'var(--brand-blue)')}
-                  onMouseLeave={(e) => (e.target.style.color = 'var(--text-secondary)')}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.color = 'var(--brand-blue)')
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.color = 'var(--text-secondary)')
+                  }
                 >
-                  {link}
+                  {link.label}
                 </a>
               ))}
             </div>
@@ -99,21 +109,15 @@ const Footer = () => {
                 marginBottom: '20px',
                 letterSpacing: '1px',
                 textTransform: 'uppercase',
-                color: 'var(--text-primary)',
               }}
             >
               Services
             </h4>
+
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {['Website Solutions', 'ATS Resumes', 'LinkedIn Optimization', 'Brand Design'].map(
                 (service) => (
-                  <div
-                    key={service}
-                    style={{
-                      color: 'var(--text-secondary)',
-                      fontSize: '16px',
-                    }}
-                  >
+                  <div key={service} style={{ color: 'var(--text-secondary)' }}>
                     {service}
                   </div>
                 )
@@ -121,7 +125,7 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Contact Info */}
+          {/* Contact */}
           <div>
             <h4
               className="mono-font"
@@ -131,78 +135,47 @@ const Footer = () => {
                 marginBottom: '20px',
                 letterSpacing: '1px',
                 textTransform: 'uppercase',
-                color: 'var(--text-primary)',
               }}
             >
               Contact
             </h4>
+
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               <a
                 href="mailto:connect.shiraai@gmail.com"
-                style={{
-                  color: 'var(--text-secondary)',
-                  textDecoration: 'none',
-                  fontSize: '16px',
-                  transition: 'color 0.3s ease',
-                }}
-                onMouseEnter={(e) => (e.target.style.color = 'var(--brand-blue)')}
-                onMouseLeave={(e) => (e.target.style.color = 'var(--text-secondary)')}
+                style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}
               >
                 connect.shiraai@gmail.com
               </a>
               <a
                 href="tel:+918210173404"
-                style={{
-                  color: 'var(--text-secondary)',
-                  textDecoration: 'none',
-                  fontSize: '16px',
-                  transition: 'color 0.3s ease',
-                }}
-                onMouseEnter={(e) => (e.target.style.color = 'var(--brand-blue)')}
-                onMouseLeave={(e) => (e.target.style.color = 'var(--text-secondary)')}
+                style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}
               >
                 +91 8210173404
               </a>
-              <div style={{ color: 'var(--text-secondary)', fontSize: '16px' }}>
+              <div style={{ color: 'var(--text-secondary)' }}>
                 New Delhi, India
               </div>
             </div>
           </div>
         </div>
 
-        {/* Divider */}
-        <div
-          style={{
-            height: '1px',
-            background: 'var(--border-subtle)',
-            marginBottom: '32px',
-          }}
-        />
-
         {/* Bottom Bar */}
         <div
           style={{
+            borderTop: '1px solid var(--border-subtle)',
+            paddingTop: '24px',
             display: 'flex',
             justifyContent: 'space-between',
-            alignItems: 'center',
             flexWrap: 'wrap',
             gap: '16px',
+            fontSize: '14px',
+            color: 'var(--text-muted)',
           }}
         >
-          <div style={{ fontSize: '14px', color: 'var(--text-muted)' }}>
-            © {currentYear} SHIRA AI. All rights reserved.
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              fontSize: '14px',
-              color: 'var(--text-muted)',
-            }}
-          >
-            Crafted with <Heart size={16} color="var(--brand-electric)" fill="var(--brand-electric)" /> by
-            SHIRA AI
+          <div>© {currentYear} SHIRA AI. All rights reserved.</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            Crafted with <Heart size={14} fill="var(--brand-electric)" /> by SHIRA AI
           </div>
         </div>
       </div>
