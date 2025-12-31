@@ -1,5 +1,10 @@
 import React from 'react';
-import { Heart } from 'lucide-react';
+import {
+  Heart,
+  Linkedin,
+  Instagram,
+  Mail
+} from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -7,7 +12,7 @@ const Footer = () => {
   const quickLinks = [
     { label: 'About', id: 'about' },
     { label: 'Services', id: 'services' },
-    { label: 'Why Us', id: 'why-choose' }, // ✅ FIXED
+    { label: 'Why Us', id: 'why-choose' },
     { label: 'Contact', id: 'contact' },
   ];
 
@@ -35,7 +40,8 @@ const Footer = () => {
               style={{
                 fontSize: '28px',
                 fontWeight: '700',
-                background: 'linear-gradient(135deg, #2563eb 0%, #8b5cf6 100%)',
+                background:
+                  'linear-gradient(135deg, #2563eb 0%, #8b5cf6 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 fontFamily: 'JetBrains Mono, monospace',
@@ -44,9 +50,11 @@ const Footer = () => {
             >
               SHIRA AI
             </div>
+
             <p className="body-small" style={{ marginBottom: '16px' }}>
               Building digital identities with intelligence, technology, and creativity.
             </p>
+
             <div
               className="mono-font"
               style={{
@@ -62,30 +70,14 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h4
-              className="mono-font"
-              style={{
-                fontSize: '14px',
-                fontWeight: '600',
-                marginBottom: '20px',
-                letterSpacing: '1px',
-                textTransform: 'uppercase',
-              }}
-            >
-              Quick Links
-            </h4>
+            <h4 className="mono-font" style={headingStyle}>Quick Links</h4>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {quickLinks.map((link) => (
                 <a
                   key={link.id}
                   href={`#${link.id}`}
-                  style={{
-                    color: 'var(--text-secondary)',
-                    textDecoration: 'none',
-                    fontSize: '16px',
-                    transition: 'color 0.3s ease',
-                  }}
+                  style={linkStyle}
                   onMouseEnter={(e) =>
                     (e.currentTarget.style.color = 'var(--brand-blue)')
                   }
@@ -101,59 +93,59 @@ const Footer = () => {
 
           {/* Services */}
           <div>
-            <h4
-              className="mono-font"
-              style={{
-                fontSize: '14px',
-                fontWeight: '600',
-                marginBottom: '20px',
-                letterSpacing: '1px',
-                textTransform: 'uppercase',
-              }}
-            >
-              Services
-            </h4>
+            <h4 className="mono-font" style={headingStyle}>Services</h4>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              {['Website Solutions', 'ATS Resumes', 'LinkedIn Optimization', 'Brand Design'].map(
-                (service) => (
-                  <div key={service} style={{ color: 'var(--text-secondary)' }}>
-                    {service}
-                  </div>
-                )
-              )}
+              {[
+                'Website Solutions',
+                'ATS Resumes',
+                'LinkedIn Optimization',
+                'Brand Design',
+              ].map((service) => (
+                <div key={service} style={{ color: 'var(--text-secondary)' }}>
+                  {service}
+                </div>
+              ))}
             </div>
           </div>
 
           {/* Contact */}
           <div>
-            <h4
-              className="mono-font"
-              style={{
-                fontSize: '14px',
-                fontWeight: '600',
-                marginBottom: '20px',
-                letterSpacing: '1px',
-                textTransform: 'uppercase',
-              }}
-            >
-              Contact
-            </h4>
+            <h4 className="mono-font" style={headingStyle}>Contact</h4>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+              {/* Email */}
               <a
                 href="mailto:connect.shiraai@gmail.com"
-                style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}
+                style={contactItemStyle}
               >
-                connect.shiraai@gmail.com
+                <Mail size={18} />
+                <span>connect.shiraai@gmail.com</span>
               </a>
+
+              {/* LinkedIn (SHORT) */}
               <a
-                href="tel:+918210173404"
-                style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}
+                href="https://www.linkedin.com/company/shiraai/"
+                target="_blank"
+                rel="noreferrer"
+                style={contactItemStyle}
               >
-                +91 8210173404
+                <Linkedin size={18} />
+                <span>@shiraai</span>
               </a>
-              <div style={{ color: 'var(--text-secondary)' }}>
+
+              {/* Instagram */}
+              <a
+                href="https://www.instagram.com/shiraai.official/"
+                target="_blank"
+                rel="noreferrer"
+                style={contactItemStyle}
+              >
+                <Instagram size={18} />
+                <span>@shiraai.official</span>
+              </a>
+
+              <div style={{ color: 'var(--text-secondary)', marginTop: '6px' }}>
                 New Delhi, India
               </div>
             </div>
@@ -174,6 +166,7 @@ const Footer = () => {
           }}
         >
           <div>© {currentYear} SHIRA AI. All rights reserved.</div>
+
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             Crafted with <Heart size={14} fill="var(--brand-electric)" /> by SHIRA AI
           </div>
@@ -181,6 +174,32 @@ const Footer = () => {
       </div>
     </footer>
   );
+};
+
+/* Shared Styles */
+const headingStyle = {
+  fontSize: '14px',
+  fontWeight: '600',
+  marginBottom: '20px',
+  letterSpacing: '1px',
+  textTransform: 'uppercase',
+};
+
+const linkStyle = {
+  color: 'var(--text-secondary)',
+  textDecoration: 'none',
+  fontSize: '16px',
+  transition: 'color 0.3s ease',
+};
+
+const contactItemStyle = {
+  display: 'flex',
+  alignItems: 'center',
+  gap: '10px',
+  color: 'var(--text-secondary)',
+  textDecoration: 'none',
+  fontSize: '15px',
+  transition: 'color 0.3s ease',
 };
 
 export default Footer;
