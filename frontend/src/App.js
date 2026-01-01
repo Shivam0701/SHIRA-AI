@@ -3,13 +3,22 @@ import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Projects from './pages/Projects';
-import ScrollToTop from './components/ScrollToTop'; // ✅ ADD THIS
+import ScrollToTop from './components/ScrollToTop';
+import { Toaster } from 'sonner';
 
 const App = () => {
   return (
     <div className="App">
       <Navbar />
-      <ScrollToTop /> {/* 🔥 MOST IMPORTANT LINE */}
+      <ScrollToTop />
+
+      {/* 🔥 TOAST ROOT */}
+      <Toaster
+        position="bottom-right"
+        richColors
+        closeButton
+        duration={3000}
+      />
 
       <main className="main-content">
         <Routes>
