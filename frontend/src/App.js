@@ -12,12 +12,18 @@ const App = () => {
       <Navbar />
       <ScrollToTop />
 
-      {/* 🔥 TOAST ROOT */}
+      {/* 🔥 GLOBAL TOAST (MOBILE + DESKTOP SAFE) */}
       <Toaster
-        position="bottom-right"
+        position="top-center"     // ✅ mobile-friendly
         richColors
         closeButton
         duration={3000}
+        toastOptions={{
+          style: {
+            zIndex: 9999,         // ✅ navbar & menu se upar
+            marginTop: '80px',    // ✅ fixed navbar ke niche
+          },
+        }}
       />
 
       <main className="main-content">
