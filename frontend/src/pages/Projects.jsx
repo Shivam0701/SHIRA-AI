@@ -24,24 +24,27 @@ const projects = [
 
 const Projects = () => {
   return (
-    <section className="section section-dark page-transition projects-page">
+    <section className="page-transition projects-page">
       <div className="shira-container">
         {/* HEADER */}
-        <div className="projects-header">
+        <header className="projects-header">
           <h1 className="heading-1">
             Representative <span className="gradient-text">Work</span>
           </h1>
           <p className="body-medium">
             A curated snapshot of real-world projects delivered for our clients.
           </p>
-        </div>
+        </header>
 
-        {/* LIST */}
+        {/* PROJECT LIST */}
         <div className="projects-list">
           {projects.map((project, i) => (
-            <div className="project-card" key={i}>
+            <article className="project-card" key={i}>
               <h3 className="heading-3">{project.title}</h3>
-              <p className="body-medium">{project.description}</p>
+
+              <p className="body-medium project-desc">
+                {project.description}
+              </p>
 
               <a
                 href={project.link}
@@ -52,17 +55,17 @@ const Projects = () => {
                 View Live Project
                 <ExternalLink size={18} />
               </a>
-            </div>
+            </article>
           ))}
         </div>
 
         {/* FOOTER */}
-        <div className="projects-footer">
+        <footer className="projects-footer">
           <p className="body-medium">
             We’ve also delivered backend systems, software tools, and digital
             products across multiple industries.
           </p>
-        </div>
+        </footer>
       </div>
     </section>
   );

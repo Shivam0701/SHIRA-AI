@@ -2,14 +2,17 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 const ScrollToTop = () => {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
 
   useEffect(() => {
+    // 🔥 Agar hash hai, to ScrollToTop kuch nahi karega
+    if (hash) return;
+
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
     });
-  }, [pathname]);
+  }, [pathname, hash]);
 
   return null;
 };

@@ -1,22 +1,63 @@
-/* GLOBAL */
+/* ================================
+   GLOBAL RESET
+================================ */
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+html,
+body {
+  width: 100%;
+  scroll-behavior: smooth;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
 .App {
   min-height: 100vh;
 }
 
-/* 🔥 FIX FOR FIXED NAVBAR */
+/* Offset for fixed navbar */
 .main-content {
   padding-top: 80px;
 }
 
-/* PAGE TRANSITION */
+/* ================================
+   THEME VARIABLES
+================================ */
+
+/* 🌙 DARK THEME (DEFAULT) */
+:root {
+  --bg-primary: #000000;
+  --bg-secondary: #0f0f0f;
+  --bg-overlay: #111111;
+
+  --text-primary: #ffffff;
+  --text-muted: #9ca3af;
+
+  --border-subtle: #1f2937;
+}
+
+/* ☀️ LIGHT THEME */
+[data-theme='light'] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f5;
+  --bg-overlay: #eaeaea;
+
+  --text-primary: #111111;
+  --text-muted: #4b5563;
+
+  --border-subtle: #d1d5db;
+}
+
+/* ================================
+   PAGE TRANSITION
+================================ */
+
 .page-transition {
-  animation: fadeSlide 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+  animation: fadeSlide 1.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @keyframes fadeSlide {
@@ -30,14 +71,18 @@
   }
 }
 
-/* NAVBAR */
+/* ================================
+   NAVBAR
+================================ */
+
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  background: black;
   z-index: 999;
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .navbar-inner {
@@ -51,36 +96,84 @@
   font-size: 26px;
   font-weight: 700;
   cursor: pointer;
-  color: #4f7cff;
+  background: linear-gradient(135deg, #2563eb, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
+
+/* ================================
+   DESKTOP NAV
+================================ */
 
 .desktop-nav {
   display: flex;
-  gap: 32px;
   align-items: center;
+  gap: 32px;
 }
 
+/* Nav buttons (About / Services / etc.) */
+.desktop-nav button {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
+  transition: color 0.2s ease;
+}
+
+.desktop-nav button:hover {
+  color: var(--text-primary);
+}
+
+/* Nav link (Projects) */
 .desktop-nav a {
-  color: #aaa;
+  color: var(--text-muted);
   text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  transition: color 0.2s ease;
 }
 
 .desktop-nav a:hover {
-  color: #fff;
+  color: var(--text-primary);
 }
 
-.theme-btn,
-.mobile-menu-btn {
-  background: #111;
-  border: 1px solid #333;
+/* ================================
+   THEME TOGGLE BUTTON
+================================ */
+
+.theme-btn {
+  background: var(--bg-overlay);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
   width: 40px;
   height: 40px;
-  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, border 0.2s ease;
 }
 
-/* MOBILE */
+.theme-btn:hover {
+  opacity: 0.85;
+}
+
+/* ================================
+   MOBILE MENU
+================================ */
+
 .mobile-menu-btn {
   display: none;
+  background: var(--bg-overlay);
+  border: 1px solid var(--border-subtle);
+  width: 40px;
+  height: 40px;
+  color: var(--text-primary);
+  cursor: pointer;
 }
 
 .mobile-menu {
@@ -88,41 +181,85 @@
   top: 80px;
   left: 0;
   right: 0;
-  background: black;
+  background: var(--bg-primary);
   display: flex;
   flex-direction: column;
   padding: 20px;
   gap: 16px;
-  transition: transform 0.35s ease;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   z-index: 998;
 }
 
+.mobile-menu button {
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 18px;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+}
+
 .mobile-menu a {
-  color: white;
+  color: var(--text-primary);
   text-decoration: none;
   font-size: 18px;
 }
 
-/* PROJECTS */
+/* ================================
+   PROJECTS PAGE (FINAL FIX)
+================================ */
+
 .projects-page {
-  padding: 60px 0;
+  padding: 100px 0 80px;
+}
+
+.projects-header {
+  max-width: 720px;
+  margin: 0 auto 64px;
+  text-align: center;
+}
+
+.projects-header h1 {
+  margin-bottom: 16px;
 }
 
 .projects-list {
   max-width: 900px;
-  margin: 40px auto;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 28px;
 }
 
 .project-card {
-  background: #111;
-  padding: 28px;
-  border-radius: 14px;
+  background: var(--bg-secondary);
+  padding: 32px;
+  border-radius: 16px;
+  border: 1px solid var(--border-subtle);
 }
 
-/* RESPONSIVE */
+.project-card p {
+  margin: 14px 0 22px;
+  line-height: 1.6;
+}
+
+.project-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.projects-footer {
+  max-width: 760px;
+  margin: 80px auto 0;
+  text-align: center;
+}
+
+/* ================================
+   RESPONSIVE
+================================ */
+
 @media (max-width: 768px) {
   .desktop-nav {
     display: none;
@@ -130,5 +267,24 @@
 
   .mobile-menu-btn {
     display: flex;
+  }
+
+  .projects-page {
+    padding: 80px 0 60px;
+  }
+
+  .project-card {
+    padding: 20px;
+  }
+
+  .project-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .projects-header h1 {
+    font-size: 1.5rem;
   }
 }

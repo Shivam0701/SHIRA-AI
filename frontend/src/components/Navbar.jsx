@@ -11,21 +11,30 @@ const Navbar = () => {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
 
+  const goHomeSection = (id) => {
+    setOpen(false);
+    navigate(`/#${id}`);
+  };
+
   return (
     <>
       <nav className="navbar">
         <div className="shira-container navbar-inner">
           {/* LOGO */}
-          <div className="navbar-logo" onClick={() => navigate('/')}>
+          <div
+            className="navbar-logo"
+            onClick={() => navigate('/')}
+          >
             SHIRA AI
           </div>
 
           {/* DESKTOP NAV */}
           <div className="desktop-nav">
-            <a href="#about">About</a>
-            <a href="#services">Services</a>
-            <a href="#why-us">Why Us</a>
-            <a href="#contact">Contact</a>
+            <button onClick={() => goHomeSection('about')}>About</button>
+            <button onClick={() => goHomeSection('services')}>Services</button>
+            <button onClick={() => goHomeSection('why-us')}>Why Us</button>
+            <button onClick={() => goHomeSection('contact')}>Contact</button>
+
             <Link to="/projects">Project Highlights</Link>
 
             <button
@@ -55,10 +64,11 @@ const Navbar = () => {
           transform: open ? 'translateY(0)' : 'translateY(-100%)',
         }}
       >
-        <a href="#about" onClick={() => setOpen(false)}>About</a>
-        <a href="#services" onClick={() => setOpen(false)}>Services</a>
-        <a href="#why-us" onClick={() => setOpen(false)}>Why Us</a>
-        <a href="#contact" onClick={() => setOpen(false)}>Contact</a>
+        <button onClick={() => goHomeSection('about')}>About</button>
+        <button onClick={() => goHomeSection('services')}>Services</button>
+        <button onClick={() => goHomeSection('why-us')}>Why Us</button>
+        <button onClick={() => goHomeSection('contact')}>Contact</button>
+
         <Link to="/projects" onClick={() => setOpen(false)}>
           Project Highlights
         </Link>
