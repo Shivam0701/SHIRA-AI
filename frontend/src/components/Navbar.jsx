@@ -1,16 +1,19 @@
+
 import React, { useState, useEffect } from 'react';
 import { Moon, Sun, Menu, X } from 'lucide-react';
 import { navLinks } from '../mock';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [theme, setTheme] = useState('dark');
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -25,22 +28,21 @@ const Navbar = () => {
 
   const handleNavClick = (href) => {
     setIsMobileMenuOpen(false);
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+
+    if (location.pathname === '/') {
+      const el = document.querySelector(href);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      navigate('/' + href);
     }
   };
 
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? 'backdrop-blur-md bg-opacity-80' : ''
-        }`}
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
         style={{
-          background: isScrolled
-            ? 'rgba(0, 0, 0, 0.8)'
-            : 'transparent',
+          background: isScrolled ? 'rgba(0,0,0,0.85)' : 'transparent',
           borderBottom: isScrolled ? '1px solid var(--border-subtle)' : 'none',
         }}
       >
@@ -58,10 +60,16 @@ const Navbar = () => {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '12px',
                 cursor: 'pointer',
+                height: '40px',
               }}
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              onClick={() => {
+                if (location.pathname === '/') {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                  navigate('/');
+                }
+              }}
             >
               <div
                 style={{
@@ -70,8 +78,8 @@ const Navbar = () => {
                   background: 'linear-gradient(135deg, #2563eb 0%, #8b5cf6 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
                   fontFamily: 'JetBrains Mono, monospace',
+                  lineHeight: '1',
                 }}
               >
                 SHIRA AI
@@ -80,12 +88,13 @@ const Navbar = () => {
 
             {/* Desktop Navigation */}
             <div
+              className="desktop-nav"
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '40px',
+                gap: '36px',
+                height: '100%',
               }}
-              className="desktop-nav"
             >
               {navLinks.map((link) => (
                 <a
@@ -100,14 +109,31 @@ const Navbar = () => {
                     textDecoration: 'none',
                     fontSize: '16px',
                     fontWeight: '500',
-                    transition: 'color 0.3s ease',
+                    height: '40px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    lineHeight: '1',
                   }}
-                  onMouseEnter={(e) => (e.target.style.color = 'var(--text-primary)')}
-                  onMouseLeave={(e) => (e.target.style.color = 'var(--text-muted)')}
                 >
                   {link.name}
                 </a>
               ))}
+
+              {/* Projects */}
+              <Link
+                to="/projects"
+                style={{
+                  color: 'var(--text-muted)',
+                  textDecoration: 'none',
+                  fontSize: '16px',
+                  fontWeight: '500',
+                  height: '40px',
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                Project Highlights
+              </Link>
 
               {/* Theme Toggle */}
               <button
@@ -115,32 +141,21 @@ const Navbar = () => {
                 style={{
                   background: 'var(--bg-overlay)',
                   border: '1px solid var(--border-subtle)',
-                  borderRadius: '0px',
                   width: '40px',
                   height: '40px',
+                  minWidth: '40px',
+                  minHeight: '40px',
+                  padding: 0,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   cursor: 'pointer',
-                  transition: 'all 0.3s ease',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = 'var(--brand-blue)';
-                  e.currentTarget.style.background = 'var(--brand-hover)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = 'var(--border-subtle)';
-                  e.currentTarget.style.background = 'var(--bg-overlay)';
                 }}
               >
-                {theme === 'dark' ? (
-                  <Sun size={20} color="var(--text-primary)" />
-                ) : (
-                  <Moon size={20} color="var(--text-primary)" />
-                )}
+                {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
               </button>
 
-              {/* CTA Button */}
+              {/* CTA */}
               <a
                 href="#contact"
                 onClick={(e) => {
@@ -148,7 +163,12 @@ const Navbar = () => {
                   handleNavClick('#contact');
                 }}
                 className="btn-primary"
-                style={{ padding: '12px 24px', fontSize: '16px' }}
+                style={{
+                  height: '40px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  padding: '0 20px',
+                }}
               >
                 Get Started
               </a>
@@ -157,24 +177,18 @@ const Navbar = () => {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="mobile-menu-button"
               style={{
                 background: 'var(--bg-overlay)',
                 border: '1px solid var(--border-subtle)',
-                borderRadius: '0px',
                 width: '40px',
                 height: '40px',
                 display: 'none',
                 alignItems: 'center',
                 justifyContent: 'center',
-                cursor: 'pointer',
               }}
-              className="mobile-menu-button"
             >
-              {isMobileMenuOpen ? (
-                <X size={20} color="var(--text-primary)" />
-              ) : (
-                <Menu size={20} color="var(--text-primary)" />
-              )}
+              {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
@@ -182,20 +196,18 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       <div
+        className="mobile-menu"
         style={{
           position: 'fixed',
           top: '80px',
           left: 0,
           right: 0,
           background: 'var(--bg-primary)',
-          borderBottom: '1px solid var(--border-subtle)',
           transform: isMobileMenuOpen ? 'translateY(0)' : 'translateY(-100%)',
-          opacity: isMobileMenuOpen ? 1 : 0,
           transition: 'all 0.3s ease',
           zIndex: 40,
           display: 'none',
         }}
-        className="mobile-menu"
       >
         <div className="shira-container" style={{ padding: '20px' }}>
           {navLinks.map((link) => (
@@ -211,47 +223,26 @@ const Navbar = () => {
                 color: 'var(--text-primary)',
                 textDecoration: 'none',
                 fontSize: '18px',
-                fontWeight: '500',
                 padding: '12px 0',
-                borderBottom: '1px solid var(--border-subtle)',
               }}
             >
               {link.name}
             </a>
           ))}
-          <div style={{ marginTop: '20px', display: 'flex', gap: '12px' }}>
-            <button
-              onClick={toggleTheme}
-              style={{
-                background: 'var(--bg-overlay)',
-                border: '1px solid var(--border-subtle)',
-                borderRadius: '0px',
-                width: '40px',
-                height: '40px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                cursor: 'pointer',
-              }}
-            >
-              {theme === 'dark' ? (
-                <Sun size={20} color="var(--text-primary)" />
-              ) : (
-                <Moon size={20} color="var(--text-primary)" />
-              )}
-            </button>
-            <a
-              href="#contact"
-              onClick={(e) => {
-                e.preventDefault();
-                handleNavClick('#contact');
-              }}
-              className="btn-primary"
-              style={{ flex: 1, justifyContent: 'center', padding: '12px 24px' }}
-            >
-              Get Started
-            </a>
-          </div>
+
+          <Link
+            to="/projects"
+            onClick={() => setIsMobileMenuOpen(false)}
+            style={{
+              display: 'block',
+              color: 'var(--text-primary)',
+              textDecoration: 'none',
+              fontSize: '18px',
+              padding: '12px 0',
+            }}
+          >
+            Projects
+          </Link>
         </div>
       </div>
 

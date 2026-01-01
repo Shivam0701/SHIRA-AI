@@ -199,7 +199,7 @@ const response = await axios.post(`${API}/contact`, formData);
 
 ## 📞 Contact Information
 
-- Email: shivamraj.0110@gmail.com
+- Email: connect.shiraai@gmail.com
 - Phone: +91 8210173404
 - Location: New Delhi, India
 

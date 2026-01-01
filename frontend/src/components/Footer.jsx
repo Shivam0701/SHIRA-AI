@@ -1,19 +1,19 @@
 import React from 'react';
-import {
-  Heart,
-  Linkedin,
-  Instagram,
-  Mail
-} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Linkedin, Instagram, Mail } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const quickLinks = [
-    { label: 'About', id: 'about' },
-    { label: 'Services', id: 'services' },
-    { label: 'Why Us', id: 'why-choose' },
-    { label: 'Contact', id: 'contact' },
+    { label: 'About', href: '#about' },
+    { label: 'Services', href: '#services' },
+    { label: 'Why Us', href: '#why-us' },
+
+    // ✅ ADD THIS
+    { label: 'Project Highlights', route: '/projects' },
+
+    { label: 'Contact', href: '#contact' },
   ];
 
   return (
@@ -73,21 +73,37 @@ const Footer = () => {
             <h4 className="mono-font" style={headingStyle}>Quick Links</h4>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              {quickLinks.map((link) => (
-                <a
-                  key={link.id}
-                  href={`#${link.id}`}
-                  style={linkStyle}
-                  onMouseEnter={(e) =>
-                    (e.currentTarget.style.color = 'var(--brand-blue)')
-                  }
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.color = 'var(--text-secondary)')
-                  }
-                >
-                  {link.label}
-                </a>
-              ))}
+              {quickLinks.map((link) =>
+                link.route ? (
+                  <Link
+                    key={link.label}
+                    to={link.route}
+                    style={linkStyle}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.color = 'var(--brand-blue)')
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.color = 'var(--text-secondary)')
+                    }
+                  >
+                    {link.label}
+                  </Link>
+                ) : (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    style={linkStyle}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.color = 'var(--brand-blue)')
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.color = 'var(--text-secondary)')
+                    }
+                  >
+                    {link.label}
+                  </a>
+                )
+              )}
             </div>
           </div>
 
@@ -114,7 +130,6 @@ const Footer = () => {
             <h4 className="mono-font" style={headingStyle}>Contact</h4>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-              {/* Email */}
               <a
                 href="mailto:connect.shiraai@gmail.com"
                 style={contactItemStyle}
@@ -123,7 +138,6 @@ const Footer = () => {
                 <span>connect.shiraai@gmail.com</span>
               </a>
 
-              {/* LinkedIn (SHORT) */}
               <a
                 href="https://www.linkedin.com/company/shiraai/"
                 target="_blank"
@@ -134,7 +148,6 @@ const Footer = () => {
                 <span>@shiraai</span>
               </a>
 
-              {/* Instagram */}
               <a
                 href="https://www.instagram.com/shiraai.official/"
                 target="_blank"
@@ -166,10 +179,6 @@ const Footer = () => {
           }}
         >
           <div>© {currentYear} SHIRA AI. All rights reserved.</div>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            Crafted with <Heart size={14} fill="var(--brand-electric)" /> by SHIRA AI
-          </div>
         </div>
       </div>
     </footer>
