@@ -53,7 +53,7 @@ body {
 }
 
 /* ================================
-   PAGE TRANSITION
+   PAGE TRANSITION (GLOBAL)
 ================================ */
 
 .page-transition {
@@ -111,7 +111,6 @@ body {
   gap: 32px;
 }
 
-/* Nav buttons (About / Services / etc.) */
 .desktop-nav button {
   background: none;
   border: none;
@@ -128,7 +127,6 @@ body {
   color: var(--text-primary);
 }
 
-/* Nav link (Projects) */
 .desktop-nav a {
   color: var(--text-muted);
   text-decoration: none;
@@ -155,7 +153,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s ease, border 0.2s ease;
+  transition: opacity 0.2s ease;
 }
 
 .theme-btn:hover {
@@ -197,7 +195,6 @@ body {
   font-size: 18px;
   text-align: left;
   cursor: pointer;
-  font-family: inherit;
 }
 
 .mobile-menu a {
@@ -207,7 +204,7 @@ body {
 }
 
 /* ================================
-   PROJECTS PAGE (FINAL FIX)
+   PROJECTS PAGE – BASE LAYOUT
 ================================ */
 
 .projects-page {
@@ -224,6 +221,15 @@ body {
   margin-bottom: 16px;
 }
 
+.projects-eyebrow {
+  display: inline-block;
+  margin-bottom: 12px;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
 .projects-list {
   max-width: 900px;
   margin: 0 auto;
@@ -232,11 +238,41 @@ body {
   gap: 28px;
 }
 
+/* ================================
+   PROJECT CARD (CREATIVE)
+================================ */
+
 .project-card {
+  position: relative;
   background: var(--bg-secondary);
   padding: 32px;
   border-radius: 16px;
   border: 1px solid var(--border-subtle);
+  overflow: hidden;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.06),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+}
+
+.project-card:hover::before {
+  opacity: 1;
 }
 
 .project-card p {
@@ -244,10 +280,94 @@ body {
   line-height: 1.6;
 }
 
+.project-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.project-tag {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--bg-overlay);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+}
+
 .project-btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+}
+
+/* ================================
+   CINEMATIC ENTRY ANIMATIONS
+================================ */
+
+.cinematic-page {
+  animation: cinematicPageIn 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes cinematicPageIn {
+  from {
+    opacity: 0;
+    transform: translateY(48px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cinematic-header {
+  animation: cinematicHeader 0.8s ease forwards;
+}
+
+@keyframes cinematicHeader {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cinematic-card {
+  opacity: 0;
+  animation: cinematicCard 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes cinematicCard {
+  from {
+    opacity: 0;
+    transform: translateY(36px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cinematic-footer {
+  opacity: 0;
+  animation: cinematicFooter 0.7s ease forwards;
+  animation-delay: 300ms;
+}
+
+@keyframes cinematicFooter {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .projects-footer {
@@ -257,7 +377,7 @@ body {
 }
 
 /* ================================
-   RESPONSIVE
+   RESPONSIVE (SAFE)
 ================================ */
 
 @media (max-width: 768px) {
@@ -275,6 +395,15 @@ body {
 
   .project-card {
     padding: 20px;
+  }
+
+  .project-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .project-card::before {
+    display: none;
   }
 
   .project-btn {
