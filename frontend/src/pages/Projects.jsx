@@ -3,6 +3,12 @@ import { ExternalLink, ArrowUpRight } from 'lucide-react';
 
 const projects = [
   {
+    title:'Genzla',
+    description:'A full-stack luxury fashion platform for custom clothing and curated products with modern UI and real-world deployment.',
+    link: 'https://www.genzla.com/',
+    tag: 'E-Commerce + On-Demand Design'
+  },
+  {
     title: 'Stranger Things Inspired Portfolio',
     description:
       'A cinematic developer portfolio inspired by Stranger Things with immersive UI, custom animations, and storytelling.',
