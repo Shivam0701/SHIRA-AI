@@ -50,9 +50,11 @@ const Services = () => {
                 {/* Icon */}
                 <div
                   style={{
-                    width: '56px',
-                    height: '56px',
+                    width: '52px',
+                    height: '52px',
                     background: 'var(--gradient-card)',
+                    border: '1px solid rgba(59, 130, 246, 0.2)',
+                    borderRadius: '12px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -60,7 +62,7 @@ const Services = () => {
                   }}
                 >
                   {IconComponent && (
-                    <IconComponent size={28} color="var(--brand-blue)" />
+                    <IconComponent size={24} color="var(--brand-blue)" />
                   )}
                 </div>
 
@@ -68,13 +70,23 @@ const Services = () => {
                 <h3
                   className="heading-3"
                   style={{
-                    marginBottom: '12px',
+                    marginBottom: '8px',
                     color: 'var(--text-primary)',
+                    fontSize: '16px',
+                    fontWeight: '600',
+                    lineHeight: '1.4',
                   }}
                 >
                   {service.title}
                 </h3>
-                <p className="body-small" style={{ color: 'var(--text-secondary)' }}>
+                <p
+                  className="body-small"
+                  style={{
+                    color: 'var(--text-secondary)',
+                    fontSize: '13.5px',
+                    lineHeight: '1.6',
+                  }}
+                >
                   {service.description}
                 </p>
               </div>

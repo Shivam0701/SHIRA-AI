@@ -10,50 +10,56 @@ export const navLinks = [
 export const services = [
   {
     id: 1,
-    title: 'Website Solutions',
-    description: 'Portfolio, Business, Personal Branding Websites & Templates',
+    title: 'Website & App Development',
+    description: 'Portfolio, business websites & scalable mobile/web applications',
     icon: 'Globe'
   },
   {
     id: 2,
-    title: 'ATS-Friendly Resumes',
-    description: 'Professional resumes optimized for Applicant Tracking Systems',
-    icon: 'FileText'
+    title: 'SaaS Development',
+    description: 'Build scalable SaaS products with modern tech stacks and cloud integration',
+    icon: 'Cloud'
   },
   {
     id: 3,
-    title: 'LinkedIn Profile Optimization',
-    description: 'Stand out with a professionally crafted LinkedIn presence',
-    icon: 'Linkedin'
+    title: 'ATS-Optimized Resumes',
+    description: 'Professional resumes engineered to pass Applicant Tracking Systems',
+    icon: 'FileText'
   },
   {
     id: 4,
-    title: 'Logo & Brand Design',
-    description: 'Create memorable brand identities that resonate',
-    icon: 'Palette'
+    title: 'LinkedIn Branding & Optimization',
+    description: 'Stand out with a strategically crafted, high-impact LinkedIn presence',
+    icon: 'Linkedin'
   },
   {
     id: 5,
-    title: 'Google Business Profile',
-    description: 'Complete setup and optimization for local visibility',
-    icon: 'MapPin'
+    title: 'Brand Identity & Logo Design',
+    description: 'Distinctive brand identities and logos that leave a lasting impression',
+    icon: 'Palette'
   },
   {
     id: 6,
-    title: 'Community Development',
-    description: 'Impactful projects with partner NGOs',
-    icon: 'Users'
+    title: 'Google Business Profile Setup & Optimization',
+    description: 'Complete setup and optimization for maximum local search visibility',
+    icon: 'MapPin'
   },
   {
     id: 7,
-    title: 'Professional Training',
-    description: 'Skill development programs with EdTech partners',
-    icon: 'GraduationCap'
+    title: 'Community & NGO Development',
+    description: 'Impactful digital solutions for communities and partner NGOs',
+    icon: 'Users'
   },
   {
     id: 8,
-    title: 'AI-Powered Solutions',
-    description: 'Intelligent tools for digital transformation',
+    title: 'Professional & Industry Training',
+    description: 'Targeted skill development programs with leading EdTech partners',
+    icon: 'GraduationCap'
+  },
+  {
+    id: 9,
+    title: 'AI-Driven Solutions',
+    description: 'Intelligent automation and AI tools for accelerated digital transformation',
     icon: 'Sparkles'
   }
 ];
