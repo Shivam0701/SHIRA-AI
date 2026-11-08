@@ -3,212 +3,78 @@ import { Link } from 'react-router-dom';
 import { Linkedin, Instagram, Mail } from 'lucide-react';
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
+  const year = new Date().getFullYear();
 
-  const quickLinks = [
-    { label: 'About', href: '#about' },
+  const links = [
+    { label: 'About',    href: '#about' },
     { label: 'Services', href: '#services' },
-    { label: 'Why Us', href: '#why-us' },
+    { label: 'Why Us',   href: '#why-us' },
+    { label: 'Contact',  href: '#contact' },
+  ];
 
-    // ✅ ADD THIS
-    { label: 'Project Highlights', route: '/projects' },
-
-    { label: 'Contact', href: '#contact' },
+  const services = [
+    'Business Websites',
+    'Mobile Applications',
+    'SaaS & Custom Software',
+    'AI Solutions & Automation',
+    'Google Business Profile',
   ];
 
   return (
-    <footer
-      style={{
-        background: 'var(--bg-primary)',
-        borderTop: '1px solid var(--border-subtle)',
-        padding: '60px 0 32px',
-      }}
-    >
+    <footer className="footer">
       <div className="shira-container">
-        {/* Main Footer Content */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-            gap: '48px',
-            marginBottom: '48px',
-          }}
-        >
-          {/* Brand */}
-          <div>
-            <div
-              style={{
-                fontSize: '28px',
-                fontWeight: '700',
-                background:
-                  'linear-gradient(135deg, #2563eb 0%, #8b5cf6 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                fontFamily: 'JetBrains Mono, monospace',
-                marginBottom: '16px',
-              }}
-            >
-              SHIRA AI
-            </div>
 
-            <p className="body-small" style={{ marginBottom: '16px' }}>
-              Building digital identities with intelligence, technology, and creativity.
+        {/* Top strip */}
+        <div className="footer-top">
+          <div className="footer-brand">
+            <div className="footer-logo mono-font">SHIRA AI</div>
+            <p className="body-small footer-brand__tagline">
+              Building intelligent digital products for businesses that want to grow.
             </p>
-
-            <div
-              className="mono-font"
-              style={{
-                fontSize: '12px',
-                color: 'var(--brand-electric)',
-                fontWeight: '600',
-                letterSpacing: '1px',
-              }}
-            >
-              AI-POWERED DIGITAL SERVICES
+            <div className="footer-social">
+              <a href="https://www.linkedin.com/company/shiraai/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+                <Linkedin size={17} />
+              </a>
+              <a href="https://www.instagram.com/shiraai.official/" target="_blank" rel="noreferrer" aria-label="Instagram">
+                <Instagram size={17} />
+              </a>
+              <a href="mailto:connect.shiraai@gmail.com" aria-label="Email">
+                <Mail size={17} />
+              </a>
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="mono-font" style={headingStyle}>Quick Links</h4>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              {quickLinks.map((link) =>
-                link.route ? (
-                  <Link
-                    key={link.label}
-                    to={link.route}
-                    style={linkStyle}
-                    onMouseEnter={(e) =>
-                      (e.currentTarget.style.color = 'var(--brand-blue)')
-                    }
-                    onMouseLeave={(e) =>
-                      (e.currentTarget.style.color = 'var(--text-secondary)')
-                    }
-                  >
-                    {link.label}
-                  </Link>
-                ) : (
-                  <a
-                    key={link.label}
-                    href={link.href}
-                    style={linkStyle}
-                    onMouseEnter={(e) =>
-                      (e.currentTarget.style.color = 'var(--brand-blue)')
-                    }
-                    onMouseLeave={(e) =>
-                      (e.currentTarget.style.color = 'var(--text-secondary)')
-                    }
-                  >
-                    {link.label}
-                  </a>
-                )
-              )}
-            </div>
+          <div className="footer-col">
+            <div className="footer-col__head mono-font">Navigation</div>
+            {links.map(l => (
+              <a key={l.label} href={l.href} className="footer-link">{l.label}</a>
+            ))}
+            <Link to="/projects" className="footer-link">Our Work</Link>
           </div>
 
-          {/* Services */}
-          <div>
-            <h4 className="mono-font" style={headingStyle}>Services</h4>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              {[
-                'Website Solutions',
-                'ATS Resumes',
-                'LinkedIn Optimization',
-                'Brand Design',
-              ].map((service) => (
-                <div key={service} style={{ color: 'var(--text-secondary)' }}>
-                  {service}
-                </div>
-              ))}
-            </div>
+          <div className="footer-col">
+            <div className="footer-col__head mono-font">Services</div>
+            {services.map(s => (
+              <span key={s} className="footer-link footer-link--static">{s}</span>
+            ))}
           </div>
 
-          {/* Contact */}
-          <div>
-            <h4 className="mono-font" style={headingStyle}>Contact</h4>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-              <a
-                href="mailto:connect.shiraai@gmail.com"
-                style={contactItemStyle}
-              >
-                <Mail size={18} />
-                <span>connect.shiraai@gmail.com</span>
-              </a>
-
-              <a
-                href="https://www.linkedin.com/company/shiraai/"
-                target="_blank"
-                rel="noreferrer"
-                style={contactItemStyle}
-              >
-                <Linkedin size={18} />
-                <span>@shiraai</span>
-              </a>
-
-              <a
-                href="https://www.instagram.com/shiraai.official/"
-                target="_blank"
-                rel="noreferrer"
-                style={contactItemStyle}
-              >
-                <Instagram size={18} />
-                <span>@shiraai.official</span>
-              </a>
-
-              <div style={{ color: 'var(--text-secondary)', marginTop: '6px' }}>
-                New Delhi, India
-              </div>
-            </div>
+          <div className="footer-col">
+            <div className="footer-col__head mono-font">Contact</div>
+            <a href="mailto:connect.shiraai@gmail.com" className="footer-link">connect.shiraai@gmail.com</a>
+            <a href="tel:+918210173404" className="footer-link">+91 8210173404</a>
+            <span className="footer-link footer-link--static">New Delhi, India</span>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div
-          style={{
-            borderTop: '1px solid var(--border-subtle)',
-            paddingTop: '24px',
-            display: 'flex',
-            justifyContent: 'space-between',
-            flexWrap: 'wrap',
-            gap: '16px',
-            fontSize: '14px',
-            color: 'var(--text-muted)',
-          }}
-        >
-          <div>© {currentYear} SHIRA AI. All rights reserved.</div>
+        {/* Bottom bar */}
+        <div className="footer-bottom">
+          <span>© {year} SHIRA AI. All rights reserved.</span>
+          <span className="mono-font footer-bottom__badge">AI-POWERED DIGITAL STUDIO</span>
         </div>
       </div>
     </footer>
   );
-};
-
-/* Shared Styles */
-const headingStyle = {
-  fontSize: '14px',
-  fontWeight: '600',
-  marginBottom: '20px',
-  letterSpacing: '1px',
-  textTransform: 'uppercase',
-};
-
-const linkStyle = {
-  color: 'var(--text-secondary)',
-  textDecoration: 'none',
-  fontSize: '16px',
-  transition: 'color 0.3s ease',
-};
-
-const contactItemStyle = {
-  display: 'flex',
-  alignItems: 'center',
-  gap: '10px',
-  color: 'var(--text-secondary)',
-  textDecoration: 'none',
-  fontSize: '15px',
-  transition: 'color 0.3s ease',
 };
 
 export default Footer;

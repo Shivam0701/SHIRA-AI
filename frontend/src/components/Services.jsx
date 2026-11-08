@@ -41,7 +41,7 @@ const Services = () => {
 
         {/* Header */}
         <div className="services-header">
-          <div className="mono-font services-eyebrow">What We Build</div>
+          <div className="section-eyebrow">What We Build</div>
           <h2 className="heading-1" style={{ marginBottom: '16px' }}>
             From Ideas to <span className="gradient-text">Intelligent Solutions</span>
           </h2>

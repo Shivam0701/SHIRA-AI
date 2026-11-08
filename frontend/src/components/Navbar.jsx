@@ -6,10 +6,17 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState('dark');
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const goHomeSection = (id) => {
     setOpen(false);
@@ -18,60 +25,39 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="navbar">
+      <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
         <div className="shira-container navbar-inner">
-          {/* LOGO */}
-          <div
-            className="navbar-logo"
-            onClick={() => navigate('/')}
-          >
+          <div className="navbar-logo" onClick={() => navigate('/')}>
             SHIRA AI
           </div>
 
-          {/* DESKTOP NAV */}
           <div className="desktop-nav">
             <button onClick={() => goHomeSection('about')}>About</button>
             <button onClick={() => goHomeSection('services')}>Services</button>
             <button onClick={() => goHomeSection('why-us')}>Why Us</button>
+            <Link to="/projects" className="nav-highlight">Our Work</Link>
             <button onClick={() => goHomeSection('contact')}>Contact</button>
-
-            <Link to="/projects">Project Highlights</Link>
-
             <button
               className="theme-btn"
-              onClick={() =>
-                setTheme(theme === 'dark' ? 'light' : 'dark')
-              }
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              aria-label="Toggle theme"
             >
-              {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+              {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
             </button>
           </div>
 
-          {/* MOBILE BUTTON */}
-          <button
-            className="mobile-menu-btn"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <X /> : <Menu />}
+          <button className="mobile-menu-btn" onClick={() => setOpen(!open)} aria-label="Menu">
+            {open ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </nav>
 
-      {/* MOBILE MENU */}
-      <div
-        className="mobile-menu"
-        style={{
-          transform: open ? 'translateY(0)' : 'translateY(-100%)',
-        }}
-      >
+      <div className="mobile-menu" style={{ transform: open ? 'translateY(0)' : 'translateY(-110%)' }}>
         <button onClick={() => goHomeSection('about')}>About</button>
         <button onClick={() => goHomeSection('services')}>Services</button>
         <button onClick={() => goHomeSection('why-us')}>Why Us</button>
+        <Link to="/projects" onClick={() => setOpen(false)}>Our Work</Link>
         <button onClick={() => goHomeSection('contact')}>Contact</button>
-
-        <Link to="/projects" onClick={() => setOpen(false)}>
-          Project Highlights
-        </Link>
       </div>
     </>
   );
