@@ -1,66 +1,107 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
-const Navbar = () => {
+const navItems = [
+  { label: 'About',    id: 'about' },
+  { label: 'Services', id: 'services' },
+  { label: 'Why Us',   id: 'why-us' },
+  { label: 'Contact',  id: 'contact' },
+];
+
+export default function Navbar() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState('dark');
   const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState(null);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    const fn = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', fn, { passive: true });
+    return () => window.removeEventListener('scroll', fn);
   }, []);
 
-  const goHomeSection = (id) => {
-    setOpen(false);
-    navigate(`/#${id}`);
-  };
+  const go = (id) => { setOpen(false); navigate(`/#${id}`); };
 
   return (
     <>
-      <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
+      <motion.nav
+        className="navbar"
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: [0.19,1,0.22,1] }}
+        style={{ '--nav-bg': scrolled ? 'rgba(6,6,8,0.96)' : 'transparent' }}
+      >
         <div className="shira-container navbar-inner">
-          <div className="navbar-logo" onClick={() => navigate('/')}>
-            SHIRA AI
+          {/* Logo */}
+          <div className="navbar-logo mono-font" onClick={() => navigate('/')}>
+            SHIRA<span className="navbar-logo__dot">.</span>AI
           </div>
 
-          <div className="desktop-nav">
-            <button onClick={() => goHomeSection('about')}>About</button>
-            <button onClick={() => goHomeSection('services')}>Services</button>
-            <button onClick={() => goHomeSection('why-us')}>Why Us</button>
-            <Link to="/projects" className="nav-highlight">Our Work</Link>
-            <button onClick={() => goHomeSection('contact')}>Contact</button>
+          {/* Desktop links */}
+          <div className="desktop-nav" role="navigation">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                className="nav-link"
+                onClick={() => go(item.id)}
+                onMouseEnter={() => setActive(item.id)}
+                onMouseLeave={() => setActive(null)}
+              >
+                {item.label}
+                <motion.span
+                  className="nav-link__underline"
+                  animate={{ scaleX: active === item.id ? 1 : 0 }}
+                  transition={{ duration: 0.25 }}
+                />
+              </button>
+            ))}
+            <Link to="/projects" className="nav-link nav-link--accent">
+              Our Work
+            </Link>
             <button
               className="theme-btn"
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              onClick={() => setTheme(t => t === 'dark' ? 'light' : 'dark')}
               aria-label="Toggle theme"
             >
-              {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+              {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
             </button>
           </div>
 
-          <button className="mobile-menu-btn" onClick={() => setOpen(!open)} aria-label="Menu">
-            {open ? <X size={20} /> : <Menu size={20} />}
+          {/* Mobile toggle */}
+          <button className="mobile-menu-btn" onClick={() => setOpen(o => !o)} aria-label="Menu">
+            {open ? <X size={19} /> : <Menu size={19} />}
           </button>
         </div>
-      </nav>
+      </motion.nav>
 
-      <div className="mobile-menu" style={{ transform: open ? 'translateY(0)' : 'translateY(-110%)' }}>
-        <button onClick={() => goHomeSection('about')}>About</button>
-        <button onClick={() => goHomeSection('services')}>Services</button>
-        <button onClick={() => goHomeSection('why-us')}>Why Us</button>
-        <Link to="/projects" onClick={() => setOpen(false)}>Our Work</Link>
-        <button onClick={() => goHomeSection('contact')}>Contact</button>
-      </div>
+      {/* Mobile drawer */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            className="mobile-menu"
+            initial={{ opacity: 0, y: -16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.28 }}
+          >
+            {navItems.map((item) => (
+              <button key={item.id} className="mobile-nav-link" onClick={() => go(item.id)}>
+                {item.label}
+              </button>
+            ))}
+            <Link to="/projects" className="mobile-nav-link" onClick={() => setOpen(false)}>
+              Our Work
+            </Link>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
-};
-
-export default Navbar;
+}

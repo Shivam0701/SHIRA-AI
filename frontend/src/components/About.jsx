@@ -1,106 +1,120 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
+import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import { Target, Zap, ArrowRight } from 'lucide-react';
 
-const About = () => {
-  const [visible, setVisible] = useState(false);
-  const ref = useRef(null);
+const fadeUp = (delay = 0) => ({
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay, ease: [0.19,1,0.22,1] } },
+});
 
-  useEffect(() => {
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) setVisible(true); },
-      { threshold: 0.12 }
-    );
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, []);
+export default function About() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-100px' });
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const textY = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const boxY  = useTransform(scrollYProgress, [0, 1], [20, -20]);
 
   return (
-    <section id="about" className="section section-dark about-section" ref={ref}>
+    <section id="about" className="about-section section section-dark" ref={ref}>
+      {/* Full-bleed index label */}
+      <div className="section-index mono-font">01</div>
+
       <div className="shira-container">
-        <div className="about-grid">
+        <div className="about-layout">
 
-          {/* Left — editorial visual block */}
-          <div className={`about-visual${visible ? ' about-visible' : ''}`}>
-            <div className="about-visual__box">
-              <div className="about-visual__noise" aria-hidden="true" />
-              <div className="about-visual__glow" aria-hidden="true" />
-              <div className="about-visual__label mono-font">EST. 2024</div>
-              <div className="about-visual__word">AI</div>
-              <div className="about-visual__word about-visual__word--outline">×</div>
-              <div className="about-visual__word">DESIGN</div>
-              <div className="about-visual__tagline mono-font">
-                Intelligence meets craft
+          {/* Left — visual installation */}
+          <motion.div className="about-left" style={{ y: boxY }}>
+            <div className="about-box">
+              {/* Rotating border ring */}
+              <div className="about-box__ring" aria-hidden="true" />
+              {/* Glow */}
+              <div className="about-box__glow" aria-hidden="true" />
+
+              <div className="about-box__inner">
+                <div className="mono-font about-box__label">SHIRA AI</div>
+                <div className="about-box__word about-box__word--solid">AI</div>
+                <div className="about-box__cross mono-font">×</div>
+                <div className="about-box__word about-box__word--outline">DESIGN</div>
+                <div className="mono-font about-box__sub">Intelligence meets craft</div>
               </div>
-            </div>
 
-            {/* Floating stat chips */}
-            <div className="about-chip about-chip--a float-slow">
-              <span className="about-chip__num">100%</span>
-              <span className="about-chip__lbl">AI-Enhanced</span>
+              {/* Floating chips */}
+              <motion.div
+                className="about-chip about-chip--a"
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+              >
+                <span className="about-chip__n">100%</span>
+                <span className="about-chip__l mono-font">AI-Enhanced</span>
+              </motion.div>
+
+              <motion.div
+                className="about-chip about-chip--b"
+                animate={{ y: [0, 8, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+              >
+                <span className="about-chip__n">24/7</span>
+                <span className="about-chip__l mono-font">Support</span>
+              </motion.div>
             </div>
-            <div className="about-chip about-chip--b float">
-              <span className="about-chip__num">24/7</span>
-              <span className="about-chip__lbl">Support</span>
-            </div>
-          </div>
+          </motion.div>
 
           {/* Right — copy */}
-          <div className={`about-copy${visible ? ' about-visible' : ''}`} style={{ transitionDelay: '0.15s' }}>
-            <div className="section-eyebrow">About SHIRA AI</div>
+          <motion.div
+            className="about-right"
+            style={{ y: textY }}
+            variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}
+            initial="hidden"
+            animate={inView ? 'visible' : 'hidden'}
+          >
+            <motion.div className="section-eyebrow mono-font" variants={fadeUp(0)}>About SHIRA AI</motion.div>
 
-            <h2 className="heading-1" style={{ marginBottom: '24px' }}>
-              Building Digital Identities<br />
-              with <span className="gradient-text">Intelligence</span>
-            </h2>
+            <motion.h2 className="about-headline" variants={fadeUp(0.05)}>
+              Building digital<br />
+              identities with<br />
+              <span className="gradient-text">Intelligence</span>
+            </motion.h2>
 
-            <p className="body-medium" style={{ marginBottom: '18px' }}>
-              SHIRA AI is an AI-powered digital studio on a mission to help individuals, 
-              professionals and businesses establish powerful digital identities — through 
-              the perfect blend of intelligence, technology and creativity.
-            </p>
-            <p className="body-medium" style={{ marginBottom: '36px' }}>
-              Whether you're a startup building your first product, a business scaling 
-              operations, or a professional defining your brand — we deliver solutions 
-              that are precise, modern and built to last.
-            </p>
+            <motion.p className="body-medium" style={{ marginBottom: 18 }} variants={fadeUp(0.1)}>
+              SHIRA AI is an AI-powered digital studio helping businesses, professionals and 
+              startups establish powerful digital identities — through the precise blend of 
+              intelligence, technology and creative execution.
+            </motion.p>
 
-            <div className="about-points">
-              <div className="about-point">
-                <div className="about-point__icon">
-                  <Target size={18} color="var(--cyan)" />
-                </div>
-                <div>
-                  <div className="about-point__title">Our Mission</div>
-                  <p className="body-small">
-                    Empower every business with intelligent technology that drives real, measurable growth.
-                  </p>
-                </div>
-              </div>
-              <div className="about-point">
-                <div className="about-point__icon">
-                  <Zap size={18} color="var(--cyan)" />
-                </div>
-                <div>
-                  <div className="about-point__title">Our Approach</div>
-                  <p className="body-small">
-                    AI-powered automation combined with human creativity — results that consistently exceed expectations.
-                  </p>
-                </div>
-              </div>
-            </div>
+            <motion.p className="body-medium" style={{ marginBottom: 36 }} variants={fadeUp(0.15)}>
+              Whether you're launching your first product or scaling enterprise operations, 
+              we deliver solutions that are precise, modern and built to last.
+            </motion.p>
 
-            <button
-              className="btn-secondary"
-              style={{ marginTop: '32px' }}
-              onClick={() => document.querySelector('#services')?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              See What We Build <ArrowRight size={16} />
-            </button>
-          </div>
+            <motion.div className="about-points" variants={fadeUp(0.2)}>
+              {[
+                { icon: Target, title: 'Our Mission', text: 'Empower every business with intelligent technology that drives real, measurable growth.' },
+                { icon: Zap, title: 'Our Approach', text: 'AI-powered automation combined with human creativity — results that consistently exceed expectations.' },
+              ].map(({ icon: Icon, title, text }) => (
+                <div key={title} className="about-point">
+                  <div className="about-point__icon">
+                    <Icon size={16} color="var(--cyan)" strokeWidth={2} />
+                  </div>
+                  <div>
+                    <div className="about-point__title">{title}</div>
+                    <p className="body-small">{text}</p>
+                  </div>
+                </div>
+              ))}
+            </motion.div>
+
+            <motion.div variants={fadeUp(0.25)}>
+              <button
+                className="btn-secondary"
+                style={{ marginTop: 32 }}
+                onClick={() => document.querySelector('#services')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                See What We Build <ArrowRight size={14} />
+              </button>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </section>
   );
-};
-
-export default About;
+}

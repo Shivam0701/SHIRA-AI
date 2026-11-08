@@ -1,97 +1,125 @@
-import React, { useEffect, useRef } from 'react';
-import { ArrowRight, ArrowDown } from 'lucide-react';
+import React, { useRef, useEffect } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { ArrowDown } from 'lucide-react';
 import Spline from '@splinetool/react-spline';
 
-const Hero = () => {
-  const lineRef = useRef(null);
+/* Staggered word reveal */
+const words = ['Build.', 'Create.', 'Launch.'];
+const headline = ['We turn ideas into', 'intelligent digital', 'products.'];
 
-  useEffect(() => {
-    const el = lineRef.current;
-    if (!el) return;
-    setTimeout(() => { el.style.width = '100%'; }, 300);
-  }, []);
-
-  const scrollTo = (id) => {
-    document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' });
+const MagneticBtn = ({ children, onClick, className }) => {
+  const ref = useRef(null);
+  const onMove = (e) => {
+    const b = ref.current.getBoundingClientRect();
+    const x = e.clientX - b.left - b.width / 2;
+    const y = e.clientY - b.top - b.height / 2;
+    ref.current.style.transform = `translate(${x * 0.22}px, ${y * 0.22}px)`;
   };
+  const onLeave = () => { ref.current.style.transform = 'translate(0,0)'; };
+  return (
+    <div ref={ref} onMouseMove={onMove} onMouseLeave={onLeave} style={{ display: 'inline-block', transition: 'transform 0.4s cubic-bezier(0.19,1,0.22,1)' }}>
+      <button className={className} onClick={onClick}>{children}</button>
+    </div>
+  );
+};
+
+const Hero = () => {
+  const containerRef = useRef(null);
+  const { scrollY } = useScroll();
+  const y1 = useTransform(scrollY, [0, 600], [0, -120]);
+  const y2 = useTransform(scrollY, [0, 600], [0, -60]);
+  const opacity = useTransform(scrollY, [0, 400], [1, 0]);
+
+  const scrollTo = (id) => document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' });
 
   return (
-    <section className="hero">
-      {/* Grid overlay */}
-      <div className="hero__grid" aria-hidden="true" />
-
-      {/* Ambient orbs */}
-      <div className="hero__orb hero__orb--a" aria-hidden="true" />
-      <div className="hero__orb hero__orb--b" aria-hidden="true" />
-      <div className="hero__orb hero__orb--c" aria-hidden="true" />
-
-      <div className="shira-container hero__inner">
-        {/* Left column */}
-        <div className="hero__content">
-          <div className="hero__eyebrow fade-in-up">
-            <span className="hero__dot" />
-            <span className="mono-font">AI-Powered Digital Studio</span>
-          </div>
-
-          <h1 className="hero__headline fade-in-up" style={{ animationDelay: '0.1s' }}>
-            We Build&nbsp;
-            <span className="gradient-text">Digital</span>
-            <br />
-            Products That&nbsp;
-            <br />
-            <span className="hero__outline-text">Matter</span>
-          </h1>
-
-          <div
-            ref={lineRef}
-            className="hero__rule"
-            style={{ width: 0, transition: 'width 1.1s cubic-bezier(0.19,1,0.22,1) 0.5s' }}
-            aria-hidden="true"
-          />
-
-          <p className="hero__sub fade-in-up" style={{ animationDelay: '0.25s' }}>
-            From intelligent web platforms and mobile apps to AI automation and SaaS — 
-            SHIRA AI turns your vision into technology that drives real growth.
-          </p>
-
-          <div className="hero__cta fade-in-up" style={{ animationDelay: '0.35s' }}>
-            <button className="btn-primary" onClick={() => scrollTo('#contact')}>
-              Start a Project
-              <ArrowRight size={17} />
-            </button>
-            <button className="btn-secondary" onClick={() => scrollTo('#services')}>
-              Explore Services
-            </button>
-          </div>
-
-          <div className="hero__meta fade-in-up" style={{ animationDelay: '0.48s' }}>
-            <div className="hero__meta-item">
-              <span className="mono-font hero__meta-label">Studio</span>
-              <span className="hero__meta-value">New Delhi, India</span>
-            </div>
-            <div className="hero__meta-divider" aria-hidden="true" />
-            <div className="hero__meta-item">
-              <span className="mono-font hero__meta-label">Powered by</span>
-              <span className="hero__meta-value" style={{ color: 'var(--cyan)' }}>Artificial Intelligence</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Right — 3D Spline */}
-        <div className="hero__visual fade-in-up" style={{ animationDelay: '0.18s' }}>
-          <div className="hero__spline-wrap">
-            <Spline
-              scene="https://prod.spline.design/NbVmy6DPLhY-5Lvg/scene.splinecode"
-              style={{ width: '100%', height: '100%' }}
-            />
-          </div>
-        </div>
+    <section className="hero-stage" ref={containerRef}>
+      {/* Full-bleed Spline background */}
+      <div className="hero-spline-bg">
+        <Spline scene="https://prod.spline.design/NbVmy6DPLhY-5Lvg/scene.splinecode" />
+        <div className="hero-spline-overlay" />
       </div>
 
-      {/* Scroll cue */}
-      <button className="hero__scroll-cue" onClick={() => scrollTo('#about')} aria-label="Scroll down">
-        <ArrowDown size={16} />
-      </button>
+      {/* Scanline texture */}
+      <div className="hero-scanlines" aria-hidden="true" />
+
+      {/* Corner labels */}
+      <motion.div className="hero-corner hero-corner--tl mono-font" style={{ opacity }}>
+        <span className="hero-corner__dot" />
+        AI-POWERED DIGITAL STUDIO
+      </motion.div>
+      <motion.div className="hero-corner hero-corner--tr mono-font" style={{ opacity }}>
+        NEW DELHI — INDIA
+      </motion.div>
+      <motion.div className="hero-corner hero-corner--bl mono-font" style={{ opacity }}>
+        EST. 2024
+      </motion.div>
+      <motion.div className="hero-corner hero-corner--br mono-font" style={{ opacity }}>
+        SCROLL TO EXPLORE
+      </motion.div>
+
+      {/* Center content */}
+      <div className="hero-center">
+        {/* Cycling word above */}
+        <motion.div
+          className="hero-cycling mono-font"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          style={{ y: y2 }}
+        >
+          <span className="hero-cycling__dot" />
+          SHIRA AI
+        </motion.div>
+
+        {/* Main headline */}
+        <motion.h1 className="hero-headline" style={{ y: y1 }}>
+          {headline.map((line, li) => (
+            <span key={li} className="hero-headline__line">
+              {line.split('').map((ch, ci) => (
+                <motion.span
+                  key={ci}
+                  className={ch === ' ' ? 'hero-headline__space' : 'hero-headline__char'}
+                  initial={{ opacity: 0, y: 60, rotateX: -40 }}
+                  animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                  transition={{ duration: 0.7, delay: 0.4 + li * 0.12 + ci * 0.015, ease: [0.19, 1, 0.22, 1] }}
+                >
+                  {ch}
+                </motion.span>
+              ))}
+            </span>
+          ))}
+        </motion.h1>
+
+        {/* Sub copy + CTA */}
+        <motion.div
+          className="hero-sub"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 1.1 }}
+        >
+          <p className="hero-sub__text">
+            From intelligent websites and mobile apps to AI automation and SaaS —
+            technology that drives real business growth.
+          </p>
+          <div className="hero-cta-row">
+            <MagneticBtn className="btn-primary" onClick={() => scrollTo('#contact')}>
+              Start a Project <ArrowDown size={14} />
+            </MagneticBtn>
+            <MagneticBtn className="btn-secondary" onClick={() => scrollTo('#services')}>
+              Explore Services
+            </MagneticBtn>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Animated bottom border */}
+      <motion.div
+        className="hero-floor-line"
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
+        transition={{ duration: 1.4, delay: 0.6, ease: [0.19, 1, 0.22, 1] }}
+      />
     </section>
   );
 };

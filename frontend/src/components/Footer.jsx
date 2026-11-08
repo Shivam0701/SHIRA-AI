@@ -1,73 +1,62 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Linkedin, Instagram, Mail } from 'lucide-react';
+import { Linkedin, Instagram, Mail, ArrowUpRight } from 'lucide-react';
 
-const Footer = () => {
+export default function Footer() {
   const year = new Date().getFullYear();
-
   const links = [
-    { label: 'About',    href: '#about' },
-    { label: 'Services', href: '#services' },
-    { label: 'Why Us',   href: '#why-us' },
-    { label: 'Contact',  href: '#contact' },
+    { label:'About',    href:'#about' },
+    { label:'Services', href:'#services' },
+    { label:'Why Us',   href:'#why-us' },
+    { label:'Contact',  href:'#contact' },
   ];
-
-  const services = [
-    'Business Websites',
-    'Mobile Applications',
-    'SaaS & Custom Software',
-    'AI Solutions & Automation',
-    'Google Business Profile',
-  ];
+  const services = ['Business Websites','Mobile Applications','SaaS & Custom Software','AI Solutions & Automation','Google Business Profile'];
 
   return (
     <footer className="footer">
-      <div className="shira-container">
+      {/* Big wordmark */}
+      <div className="footer-wordmark" aria-hidden="true">SHIRA AI</div>
 
-        {/* Top strip */}
+      <div className="shira-container footer-inner">
         <div className="footer-top">
           <div className="footer-brand">
-            <div className="footer-logo mono-font">SHIRA AI</div>
-            <p className="body-small footer-brand__tagline">
+            <div className="footer-logo mono-font">SHIRA<span style={{ color:'var(--cyan)' }}>.</span>AI</div>
+            <p className="body-small footer-brand__tag">
               Building intelligent digital products for businesses that want to grow.
             </p>
             <div className="footer-social">
-              <a href="https://www.linkedin.com/company/shiraai/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
-                <Linkedin size={17} />
-              </a>
-              <a href="https://www.instagram.com/shiraai.official/" target="_blank" rel="noreferrer" aria-label="Instagram">
-                <Instagram size={17} />
-              </a>
-              <a href="mailto:connect.shiraai@gmail.com" aria-label="Email">
-                <Mail size={17} />
-              </a>
+              {[
+                { href:'https://www.linkedin.com/company/shiraai/', Icon: Linkedin, label:'LinkedIn' },
+                { href:'https://www.instagram.com/shiraai.official/', Icon: Instagram, label:'Instagram' },
+                { href:'mailto:connect.shiraai@gmail.com', Icon: Mail, label:'Email' },
+              ].map(({ href, Icon, label }) => (
+                <a key={label} href={href} target="_blank" rel="noreferrer" className="footer-social__link" aria-label={label}>
+                  <Icon size={15} />
+                </a>
+              ))}
             </div>
           </div>
 
           <div className="footer-col">
             <div className="footer-col__head mono-font">Navigation</div>
-            {links.map(l => (
-              <a key={l.label} href={l.href} className="footer-link">{l.label}</a>
-            ))}
+            {links.map(l => <a key={l.label} href={l.href} className="footer-link">{l.label}</a>)}
             <Link to="/projects" className="footer-link">Our Work</Link>
           </div>
 
           <div className="footer-col">
             <div className="footer-col__head mono-font">Services</div>
-            {services.map(s => (
-              <span key={s} className="footer-link footer-link--static">{s}</span>
-            ))}
+            {services.map(s => <span key={s} className="footer-link footer-link--dim">{s}</span>)}
           </div>
 
           <div className="footer-col">
             <div className="footer-col__head mono-font">Contact</div>
             <a href="mailto:connect.shiraai@gmail.com" className="footer-link">connect.shiraai@gmail.com</a>
             <a href="tel:+918210173404" className="footer-link">+91 8210173404</a>
-            <span className="footer-link footer-link--static">New Delhi, India</span>
+            <span className="footer-link footer-link--dim">New Delhi, India</span>
           </div>
         </div>
 
-        {/* Bottom bar */}
         <div className="footer-bottom">
           <span>© {year} SHIRA AI. All rights reserved.</span>
           <span className="mono-font footer-bottom__badge">AI-POWERED DIGITAL STUDIO</span>
@@ -75,6 +64,4 @@ const Footer = () => {
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}
