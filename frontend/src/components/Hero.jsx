@@ -1,127 +1,138 @@
-import React, { useRef, useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowDown } from 'lucide-react';
-import Spline from '@splinetool/react-spline';
+import React, { useEffect, useRef, Suspense } from 'react';
+import { motion } from 'framer-motion';
+import { ArrowDown, ArrowRight } from 'lucide-react';
+import HeroScene from './HeroScene';
 
-/* Staggered word reveal */
-const words = ['Build.', 'Create.', 'Launch.'];
-const headline = ['We turn ideas into', 'intelligent digital', 'products.'];
+const word = (text, delay) => (
+  <span style={{ overflow: 'hidden', display: 'block' }}>
+    <motion.span
+      style={{ display: 'block' }}
+      initial={{ y: '110%' }}
+      animate={{ y: 0 }}
+      transition={{ duration: 1, delay, ease: [0.19, 1, 0.22, 1] }}
+    >
+      {text}
+    </motion.span>
+  </span>
+);
 
-const MagneticBtn = ({ children, onClick, className }) => {
+const MagBtn = ({ children, className, onClick, href, target }) => {
   const ref = useRef(null);
   const onMove = (e) => {
     const b = ref.current.getBoundingClientRect();
-    const x = e.clientX - b.left - b.width / 2;
-    const y = e.clientY - b.top - b.height / 2;
-    ref.current.style.transform = `translate(${x * 0.22}px, ${y * 0.22}px)`;
+    const x = (e.clientX - b.left - b.width / 2) * 0.25;
+    const y = (e.clientY - b.top - b.height / 2) * 0.25;
+    ref.current.querySelector('.mag-inner').style.transform = `translate(${x}px,${y}px)`;
   };
-  const onLeave = () => { ref.current.style.transform = 'translate(0,0)'; };
+  const onLeave = () => { ref.current.querySelector('.mag-inner').style.transform = 'translate(0,0)'; };
+
+  const Tag = href ? 'a' : 'button';
   return (
-    <div ref={ref} onMouseMove={onMove} onMouseLeave={onLeave} style={{ display: 'inline-block', transition: 'transform 0.4s cubic-bezier(0.19,1,0.22,1)' }}>
-      <button className={className} onClick={onClick}>{children}</button>
+    <div ref={ref} onMouseMove={onMove} onMouseLeave={onLeave} style={{ display: 'inline-block' }}>
+      <Tag className={className} onClick={onClick} href={href} target={target} rel={target ? 'noreferrer' : undefined}>
+        <span className="mag-inner" style={{ display: 'inline-flex', alignItems: 'center', gap: 9, transition: 'transform 0.45s cubic-bezier(0.19,1,0.22,1)' }}>
+          {children}
+        </span>
+      </Tag>
     </div>
   );
 };
 
-const Hero = () => {
-  const containerRef = useRef(null);
-  const { scrollY } = useScroll();
-  const y1 = useTransform(scrollY, [0, 600], [0, -120]);
-  const y2 = useTransform(scrollY, [0, 600], [0, -60]);
-  const opacity = useTransform(scrollY, [0, 400], [1, 0]);
+export { MagBtn };
 
+export default function Hero() {
   const scrollTo = (id) => document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' });
 
   return (
-    <section className="hero-stage" ref={containerRef}>
-      {/* Full-bleed Spline background */}
-      <div className="hero-spline-bg">
-        <Spline scene="https://prod.spline.design/NbVmy6DPLhY-5Lvg/scene.splinecode" />
-        <div className="hero-spline-overlay" />
-      </div>
+    <section className="hero-root">
+      {/* 3D Canvas */}
+      <Suspense fallback={<div className="hero-canvas-fallback" />}>
+        <HeroScene />
+      </Suspense>
 
-      {/* Scanline texture */}
-      <div className="hero-scanlines" aria-hidden="true" />
+      {/* Overlay vignette */}
+      <div className="hero-vignette" aria-hidden="true" />
 
-      {/* Corner labels */}
-      <motion.div className="hero-corner hero-corner--tl mono-font" style={{ opacity }}>
-        <span className="hero-corner__dot" />
-        AI-POWERED DIGITAL STUDIO
-      </motion.div>
-      <motion.div className="hero-corner hero-corner--tr mono-font" style={{ opacity }}>
-        NEW DELHI — INDIA
-      </motion.div>
-      <motion.div className="hero-corner hero-corner--bl mono-font" style={{ opacity }}>
-        EST. 2024
-      </motion.div>
-      <motion.div className="hero-corner hero-corner--br mono-font" style={{ opacity }}>
-        SCROLL TO EXPLORE
-      </motion.div>
+      {/* Noise texture */}
+      <div className="hero-noise" aria-hidden="true" />
 
-      {/* Center content */}
-      <div className="hero-center">
-        {/* Cycling word above */}
+      {/* Content */}
+      <div className="hero-content">
+        {/* Eyebrow */}
         <motion.div
-          className="hero-cycling mono-font"
-          initial={{ opacity: 0, y: 20 }}
+          className="hero-eyebrow mono-font"
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          style={{ y: y2 }}
         >
-          <span className="hero-cycling__dot" />
-          SHIRA AI
+          <span className="hero-eyebrow__dot" />
+          AI-Powered Digital Studio — New Delhi
         </motion.div>
 
-        {/* Main headline */}
-        <motion.h1 className="hero-headline" style={{ y: y1 }}>
-          {headline.map((line, li) => (
-            <span key={li} className="hero-headline__line">
-              {line.split('').map((ch, ci) => (
-                <motion.span
-                  key={ci}
-                  className={ch === ' ' ? 'hero-headline__space' : 'hero-headline__char'}
-                  initial={{ opacity: 0, y: 60, rotateX: -40 }}
-                  animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                  transition={{ duration: 0.7, delay: 0.4 + li * 0.12 + ci * 0.015, ease: [0.19, 1, 0.22, 1] }}
-                >
-                  {ch}
-                </motion.span>
-              ))}
-            </span>
-          ))}
-        </motion.h1>
+        {/* Headline */}
+        <h1 className="hero-headline">
+          {word('We Build', 0.35)}
+          {word('Intelligent', 0.48)}
+          {word('Digital Products', 0.61)}
+        </h1>
 
-        {/* Sub copy + CTA */}
-        <motion.div
+        {/* Sub */}
+        <motion.p
           className="hero-sub"
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 1.1 }}
+          transition={{ duration: 0.9, delay: 0.9 }}
         >
-          <p className="hero-sub__text">
-            From intelligent websites and mobile apps to AI automation and SaaS —
-            technology that drives real business growth.
-          </p>
-          <div className="hero-cta-row">
-            <MagneticBtn className="btn-primary" onClick={() => scrollTo('#contact')}>
-              Start a Project <ArrowDown size={14} />
-            </MagneticBtn>
-            <MagneticBtn className="btn-secondary" onClick={() => scrollTo('#services')}>
-              Explore Services
-            </MagneticBtn>
-          </div>
+          From websites and mobile apps to AI automation and SaaS —
+          <br />technology that drives real business growth.
+        </motion.p>
+
+        {/* CTAs */}
+        <motion.div
+          className="hero-cta"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 1.05 }}
+        >
+          <MagBtn className="btn-primary" onClick={() => scrollTo('#contact')}>
+            Start a Project <ArrowRight size={14} />
+          </MagBtn>
+          <MagBtn className="btn-secondary" onClick={() => scrollTo('#services')}>
+            Explore Services
+          </MagBtn>
+        </motion.div>
+
+        {/* Stats row */}
+        <motion.div
+          className="hero-stats"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 1.3 }}
+        >
+          {[
+            { n: '100%', l: 'AI-Enhanced' },
+            { n: '24/7', l: 'Support' },
+            { n: '2024', l: 'Est.' },
+          ].map(({ n, l }) => (
+            <div key={l} className="hero-stat">
+              <span className="hero-stat__n">{n}</span>
+              <span className="hero-stat__l mono-font">{l}</span>
+            </div>
+          ))}
         </motion.div>
       </div>
 
-      {/* Animated bottom border */}
-      <motion.div
-        className="hero-floor-line"
-        initial={{ scaleX: 0 }}
-        animate={{ scaleX: 1 }}
-        transition={{ duration: 1.4, delay: 0.6, ease: [0.19, 1, 0.22, 1] }}
-      />
+      {/* Scroll cue */}
+      <motion.button
+        className="hero-scroll"
+        onClick={() => scrollTo('#about')}
+        aria-label="Scroll down"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.8 }}
+      >
+        <ArrowDown size={16} />
+      </motion.button>
     </section>
   );
-};
-
-export default Hero;
+}
