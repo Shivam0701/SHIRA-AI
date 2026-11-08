@@ -130,6 +130,12 @@ html,body{width:100%}
   display:flex;align-items:center;justify-content:center;
 }
 .hero-canvas-fallback{position:absolute;inset:0;background:var(--void)}
+.hero-mobile-bg{
+  position:absolute;inset:0;background:var(--void);
+  background-image:
+    radial-gradient(ellipse 60% 40% at 70% 30%, rgba(2,132,199,0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 50% at 20% 70%, rgba(124,58,237,0.12) 0%, transparent 70%);
+}
 
 /* Vignette overlay */
 .hero-vignette{
@@ -538,42 +544,156 @@ html,body{width:100%}
 @keyframes rotateSlow{to{transform:rotate(360deg)}}
 
 /* ─────────────────────────────────
-   RESPONSIVE
+   RESPONSIVE — Complete
 ───────────────────────────────── */
-@media(max-width:1200px){
+
+/* ── 1280px — large tablets / small laptops ── */
+@media(max-width:1280px){
   .svc-grid{grid-template-columns:repeat(2,1fr)}
   .footer-grid{grid-template-columns:1fr 1fr;gap:36px}
 }
+
+/* ── 1024px — tablets landscape ── */
 @media(max-width:1024px){
+  /* About split → stacked */
   .about-section{grid-template-columns:1fr;min-height:auto}
-  .about-panel--dark{padding:80px 8%}
-  .about-panel--cream{padding:80px 8%}
+  .about-panel--dark,.about-panel--cream{padding:72px 7%}
   .about-panel__inner{max-width:100%}
-  .why-header{grid-template-columns:1fr;gap:16px}
-  .impact-cards{grid-template-columns:1fr}
+  .about-editorial__bg{font-size:120px}
+
+  /* Why */
+  .why-header{grid-template-columns:1fr;gap:14px}
+  .why-header__sub{max-width:100%}
+
+  /* Impact */
+  .impact-cards{grid-template-columns:repeat(2,1fr)}
+
+  /* Contact */
   .contact-layout{grid-template-columns:1fr;gap:44px}
+
+  /* Projects */
   .proj-grid{grid-template-columns:1fr}
+
+  /* Hero stats wrap */
+  .hero-stats{gap:20px}
 }
+
+/* ── 768px — tablets portrait / large phones ── */
 @media(max-width:768px){
+  /* Navbar */
   .desktop-nav{display:none}
   .mobile-menu-btn{display:flex}
-  .main-content{padding-top:72px}
-  .svc-header{grid-template-columns:1fr;gap:14px}
-  .hero-headline{font-size:clamp(42px,12vw,64px)}
-  .hero-cta{flex-direction:column}
+
+  /* Sections */
+  .section{padding:80px 0}
+  .shira-container{padding:0 5%}
+
+  /* Hero */
+  .hero-root{height:auto;min-height:100vh;padding:0}
+  .hero-content{padding:100px 24px 80px}
+  .hero-headline{font-size:clamp(38px,11vw,60px)}
+  .hero-sub{font-size:15px}
+  .hero-cta{flex-direction:column;align-items:stretch}
   .hero-cta .btn-primary,.hero-cta .btn-secondary{width:100%;justify-content:center}
+  .hero-stats{gap:18px}
+  .hero-stat__n{font-size:18px}
+
+  /* About */
+  .about-section{grid-template-columns:1fr}
+  .about-panel--dark,.about-panel--cream{padding:60px 5%}
+  .about-headline{font-size:clamp(28px,8vw,42px)}
+  .about-stats{grid-template-columns:1fr 1fr}
+  .about-stat{padding:20px 16px}
+  .about-stat__n{font-size:26px}
+
+  /* Services */
+  .svc-section .section{padding:80px 0}
+  .svc-header{grid-template-columns:1fr;gap:12px;margin-bottom:40px}
+  .svc-headline{font-size:clamp(24px,7vw,38px)}
+  .svc-grid{grid-template-columns:repeat(2,1fr)}
+
+  /* Why */
+  .why-section .section{padding:80px 0}
+  .why-headline{font-size:clamp(24px,7vw,38px)}
+  .why-row{grid-template-columns:32px 32px 1fr;gap:12px;padding:18px 0}
+
+  /* Impact */
+  .impact-cards{grid-template-columns:1fr}
+  .impact-headline{font-size:clamp(28px,9vw,44px)}
+  .impact-card{padding:32px 24px}
+
+  /* Contact */
+  .contact-layout{grid-template-columns:1fr;gap:40px}
+  .contact-headline{font-size:clamp(28px,9vw,44px)}
+  .contact-bg-word{font-size:clamp(72px,18vw,140px)}
+  .contact-form{gap:12px}
+
+  /* Footer */
+  .footer-grid{grid-template-columns:1fr;gap:28px}
+  .footer-wordmark{font-size:80px}
+  .footer-bottom{flex-direction:column;text-align:center;gap:8px}
+
+  /* Projects */
+  .proj-grid{grid-template-columns:1fr}
   .proj-card__inner{padding:28px 20px}
   .proj-card__btn{width:100%;justify-content:center}
-  .footer-grid{grid-template-columns:1fr;gap:28px}
-  .about-stats{grid-template-columns:1fr 1fr}
+  .projects-page{padding:90px 0 60px}
 }
-@media(max-width:540px){
+
+/* ── 480px — phones ── */
+@media(max-width:480px){
+  .shira-container{padding:0 18px}
+
+  /* Hero */
+  .hero-headline{font-size:clamp(34px,12vw,52px);letter-spacing:-0.03em}
+  .hero-eyebrow{font-size:10px;padding:6px 12px}
+  .hero-stats{flex-direction:row;gap:16px;flex-wrap:wrap;justify-content:center}
+  .hero-stat__n{font-size:16px}
+
+  /* Services grid → 1 col */
   .svc-grid{grid-template-columns:1fr}
+  .svc-header{margin-bottom:32px}
+
+  /* About stats → 1 col */
   .about-stats{grid-template-columns:1fr}
-  .impact-headline{font-size:clamp(28px,9vw,44px)}
-  .contact-headline{font-size:clamp(28px,9vw,42px)}
-  .footer-bottom{flex-direction:column;text-align:center}
+  .about-panel--dark,.about-panel--cream{padding:52px 5%}
+
+  /* Why rows smaller */
+  .why-row{grid-template-columns:28px 28px 1fr;gap:10px}
+  .why-row__icon{width:28px;height:28px}
+
+  /* Impact */
+  .impact-cards{grid-template-columns:1fr}
+  .impact-card{padding:28px 20px}
+  .impact-card__top{flex-direction:column;align-items:flex-start;gap:10px}
+
+  /* Contact */
+  .contact-section .shira-container{padding:0 18px}
+  .contact-headline{font-size:clamp(26px,10vw,38px)}
+  .contact-bg-word{display:none}
+  .contact-info__val{font-size:13px;word-break:break-all}
+
+  /* Footer */
+  .footer{padding:56px 0 28px}
+  .footer-bottom__badge{display:none}
+
+  /* Nav */
+  .navbar-logo{font-size:16px}
+  .mobile-menu-btn{width:34px;height:34px}
+
+  /* Projects */
+  .proj-card__inner{padding:22px 16px}
+  .proj-card__title{font-size:16px}
 }
+
+/* ── 360px — very small phones ── */
+@media(max-width:360px){
+  .hero-headline{font-size:32px}
+  .btn-primary,.btn-secondary{padding:13px 20px;font-size:12px}
+  .svc-card{padding:22px 18px}
+  .contact-headline{font-size:24px}
+}
+
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}
 }

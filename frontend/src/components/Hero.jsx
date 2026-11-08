@@ -1,7 +1,11 @@
-import React, { useEffect, useRef, Suspense } from 'react';
+import React, { useEffect, useRef, Suspense, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDown, ArrowRight } from 'lucide-react';
 import HeroScene from './HeroScene';
+
+const isMobile = () =>
+  typeof window !== 'undefined' &&
+  (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || window.innerWidth < 768);
 
 const word = (text, delay) => (
   <span style={{ overflow: 'hidden', display: 'block' }}>
@@ -41,14 +45,28 @@ const MagBtn = ({ children, className, onClick, href, target }) => {
 export { MagBtn };
 
 export default function Hero() {
+  const [show3D, setShow3D] = useState(false);
   const scrollTo = (id) => document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' });
+
+  useEffect(() => {
+    // Defer 3D load, skip on mobile/low-end
+    if (!isMobile()) {
+      const t = setTimeout(() => setShow3D(true), 100);
+      return () => clearTimeout(t);
+    }
+  }, []);
 
   return (
     <section className="hero-root">
-      {/* 3D Canvas */}
-      <Suspense fallback={<div className="hero-canvas-fallback" />}>
-        <HeroScene />
-      </Suspense>
+      {/* 3D Canvas — desktop only */}
+      {show3D && (
+        <Suspense fallback={<div className="hero-canvas-fallback" />}>
+          <HeroScene />
+        </Suspense>
+      )}
+
+      {/* Mobile fallback bg */}
+      {!show3D && <div className="hero-mobile-bg" aria-hidden="true" />}
 
       {/* Overlay vignette */}
       <div className="hero-vignette" aria-hidden="true" />
@@ -112,7 +130,7 @@ export default function Hero() {
           {[
             { n: '100%', l: 'AI-Enhanced' },
             { n: '24/7', l: 'Support' },
-            { n: '2024', l: 'Est.' },
+            { n: 'India', l: 'New Delhi' },
           ].map(({ n, l }) => (
             <div key={l} className="hero-stat">
               <span className="hero-stat__n">{n}</span>
