@@ -59,7 +59,7 @@ export default function Navbar() {
                 />
               </button>
             ))}
-            <Link to="/projects" className="nav-btn nav-btn--accent">Our Work</Link>
+            <Link to="/projects" className="nav-btn">Our Work</Link>
             <button
               className="theme-btn"
               onClick={() => setTheme(t => t === 'dark' ? 'light' : 'dark')}

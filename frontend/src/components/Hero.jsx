@@ -89,9 +89,9 @@ export default function Hero() {
 
         {/* Headline */}
         <h1 className="hero-headline">
-          {word('We Build', 0.35)}
-          {word('Intelligent', 0.48)}
-          {word('Digital Products', 0.61)}
+          {word('We Build Digital', 0.35)}
+          {word('Experiences That', 0.48)}
+          {word('Move Businesses Forward.', 0.61)}
         </h1>
 
         {/* Sub */}
@@ -101,8 +101,8 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.9 }}
         >
-          From websites and mobile apps to AI automation and SaaS —
-          <br />technology that drives real business growth.
+          From business websites and mobile apps to custom software and AI-powered automation —
+          <br />we turn your ideas into solutions that deliver real value.
         </motion.p>
 
         {/* CTAs */}
