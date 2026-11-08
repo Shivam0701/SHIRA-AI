@@ -10,33 +10,51 @@ export const navLinks = [
 export const services = [
   {
     id: 1,
-    title: 'Website Development',
-    description: 'Modern, responsive and SEO-friendly websites designed to establish your online presence and grow your business.',
+    title: 'Business Websites',
+    description: 'Modern, responsive and SEO-friendly websites that establish your brand online and convert visitors into customers.',
     icon: 'Globe'
   },
   {
     id: 2,
-    title: 'Mobile App Development',
-    description: 'User-friendly mobile applications built with modern technologies, delivering smooth performance and seamless user experiences.',
-    icon: 'Smartphone'
+    title: 'E-commerce Platforms',
+    description: 'Full-featured online stores with secure payments, inventory management and seamless shopping experiences.',
+    icon: 'ShoppingCart'
   },
   {
     id: 3,
-    title: 'SaaS Development',
-    description: 'Scalable cloud-based software solutions with secure architecture, smart integrations and features tailored to your business needs.',
+    title: 'SaaS & Custom Software',
+    description: 'Scalable cloud-based software solutions with secure architecture and smart integrations tailored to your business.',
     icon: 'Cloud'
   },
   {
     id: 4,
-    title: 'AI Solutions & Automation',
-    description: 'Intelligent AI-powered tools and workflow automation that simplify operations, improve productivity and accelerate business growth.',
-    icon: 'Sparkles'
+    title: 'Mobile Applications',
+    description: 'User-friendly mobile apps built for iOS and Android, delivering smooth performance and engaging user experiences.',
+    icon: 'Smartphone'
   },
   {
     id: 5,
-    title: 'Google Business Profile Optimization',
-    description: 'Professional setup and optimization to improve your local search visibility, strengthen your online presence and help customers find your business.',
-    icon: 'MapPin'
+    title: 'AI Chatbots & Virtual Assistants',
+    description: 'Intelligent conversational AI that handles customer queries, qualifies leads and supports your team around the clock.',
+    icon: 'MessageSquare'
+  },
+  {
+    id: 6,
+    title: 'AI Agents & Workflow Automation',
+    description: 'Smart automation pipelines that eliminate repetitive tasks, streamline operations and accelerate business growth.',
+    icon: 'Sparkles'
+  },
+  {
+    id: 7,
+    title: 'CRM, ERP & Business Systems',
+    description: 'Custom management systems that centralise your data, streamline workflows and give you full control of your operations.',
+    icon: 'LayoutDashboard'
+  },
+  {
+    id: 8,
+    title: 'Data Analytics & Business Intelligence',
+    description: 'Clear dashboards and actionable insights that turn your raw data into strategic decisions and measurable results.',
+    icon: 'BarChart3'
   }
 ];
 

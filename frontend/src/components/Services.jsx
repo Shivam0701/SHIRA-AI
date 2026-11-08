@@ -1,98 +1,79 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import * as LucideIcons from 'lucide-react';
 import { services } from '../mock';
 
-const ServiceCard = ({ service, index, IconComponent }) => (
+const ServiceCard = ({ service, index, IconComponent, isVisible }) => (
   <div
-    className="shira-card fade-in-up"
-    style={{ animationDelay: `${index * 0.1}s` }}
+    className="shira-card services-card"
+    style={{
+      opacity: isVisible ? 1 : 0,
+      transform: isVisible ? 'translateY(0)' : 'translateY(32px)',
+      transition: `opacity 0.55s ease ${index * 0.07}s, transform 0.55s ease ${index * 0.07}s`,
+    }}
   >
-    <div
-      style={{
-        width: '52px',
-        height: '52px',
-        background: 'var(--gradient-card)',
-        border: '1px solid rgba(59, 130, 246, 0.2)',
-        borderRadius: '12px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: '20px',
-      }}
-    >
-      {IconComponent && <IconComponent size={24} color="var(--brand-blue)" />}
+    {/* Icon */}
+    <div className="services-card__icon">
+      {IconComponent && <IconComponent size={22} color="var(--brand-blue-light)" strokeWidth={1.8} />}
     </div>
-    <h3
-      className="heading-3"
-      style={{
-        marginBottom: '8px',
-        color: 'var(--text-primary)',
-        fontSize: '16px',
-        fontWeight: '600',
-        lineHeight: '1.4',
-      }}
-    >
-      {service.title}
-    </h3>
-    <p
-      className="body-small"
-      style={{
-        color: 'var(--text-secondary)',
-        fontSize: '13.5px',
-        lineHeight: '1.6',
-      }}
-    >
-      {service.description}
-    </p>
+
+    {/* Text */}
+    <h3 className="services-card__title">{service.title}</h3>
+    <p className="services-card__desc">{service.description}</p>
   </div>
 );
 
 const Services = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setIsVisible(true); },
+      { threshold: 0.1 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section id="services" className="section section-accent">
+    <section id="services" className="section section-accent" ref={sectionRef}>
       <div className="shira-container">
-        {/* Section Header */}
-        <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-          <div
-            className="mono-font"
-            style={{
-              fontSize: '14px',
-              color: 'var(--brand-electric)',
-              marginBottom: '12px',
-              fontWeight: '600',
-              letterSpacing: '2px',
-              textTransform: 'uppercase',
-            }}
-          >
-            What We Offer
-          </div>
+
+        {/* Header */}
+        <div className="services-header">
+          <div className="mono-font services-eyebrow">What We Build</div>
           <h2 className="heading-1" style={{ marginBottom: '16px' }}>
-            Our <span className="gradient-text">Services</span>
+            From Ideas to <span className="gradient-text">Intelligent Solutions</span>
           </h2>
-          <p className="body-medium" style={{ maxWidth: '700px', margin: '0 auto' }}>
-            Comprehensive digital solutions powered by AI to elevate your personal and professional presence
+          <p className="body-medium services-subtitle">
+            From ideas to intelligent digital solutions — we build technology that moves your business forward.
           </p>
         </div>
 
-        {/* Services Grid — row 1: first 3 cards */}
-        <div className="services-grid-row">
-          {services.slice(0, 3).map((service, index) => {
+        {/* Grid */}
+        <div className="services-grid">
+          {services.map((service, index) => {
             const IconComponent = LucideIcons[service.icon];
             return (
-              <ServiceCard key={service.id} service={service} index={index} IconComponent={IconComponent} />
+              <ServiceCard
+                key={service.id}
+                service={service}
+                index={index}
+                IconComponent={IconComponent}
+                isVisible={isVisible}
+              />
             );
           })}
         </div>
 
-        {/* Services Grid — row 2: last 2 cards centered */}
-        <div className="services-grid-row services-grid-row--centered" style={{ marginTop: '24px' }}>
-          {services.slice(3).map((service, index) => {
-            const IconComponent = LucideIcons[service.icon];
-            return (
-              <ServiceCard key={service.id} service={service} index={index + 3} IconComponent={IconComponent} />
-            );
-          })}
+        {/* CTA */}
+        <div className="services-cta">
+          <a href="#contact" className="btn-primary">
+            Discuss Your Project
+            <LucideIcons.ArrowRight size={18} />
+          </a>
         </div>
+
       </div>
     </section>
   );

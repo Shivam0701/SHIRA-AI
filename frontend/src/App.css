@@ -419,41 +419,91 @@ body {
 }
 
 /* ================================
-   SERVICES GRID (5-card balanced layout)
+   SERVICES SECTION
 ================================ */
 
-.services-grid-row {
+.services-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.services-eyebrow {
+  font-size: 13px;
+  color: var(--brand-electric);
+  margin-bottom: 12px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+}
+
+.services-subtitle {
+  max-width: 680px;
+  margin: 0 auto;
+  color: var(--text-secondary);
+}
+
+/* 4-col grid, wraps naturally */
+.services-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
 }
 
-.services-grid-row--centered {
-  grid-template-columns: repeat(2, 1fr);
-  max-width: calc(66.66% + 8px);
-  margin-left: auto;
-  margin-right: auto;
+.services-card {
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  cursor: default;
 }
 
-@media (max-width: 1024px) {
-  .services-grid-row {
+.services-card__icon {
+  width: 48px;
+  height: 48px;
+  background: rgba(37, 99, 235, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.18);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.services-card:hover .services-card__icon {
+  background: rgba(37, 99, 235, 0.15);
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+.services-card__title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+
+.services-card__desc {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.services-cta {
+  text-align: center;
+  margin-top: 52px;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .services-grid {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .services-grid-row--centered {
-    grid-template-columns: repeat(2, 1fr);
-    max-width: 100%;
-    margin-left: 0;
-    margin-right: 0;
+    gap: 18px;
   }
 }
 
-@media (max-width: 640px) {
-  .services-grid-row,
-  .services-grid-row--centered {
+@media (max-width: 600px) {
+  .services-grid {
     grid-template-columns: 1fr;
-    max-width: 100%;
-    margin-left: 0;
-    margin-right: 0;
   }
 }
