@@ -417,3 +417,43 @@ body {
     font-size: 1.5rem;
   }
 }
+
+/* ================================
+   SERVICES GRID (5-card balanced layout)
+================================ */
+
+.services-grid-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.services-grid-row--centered {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: calc(66.66% + 8px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 1024px) {
+  .services-grid-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .services-grid-row--centered {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .services-grid-row,
+  .services-grid-row--centered {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}

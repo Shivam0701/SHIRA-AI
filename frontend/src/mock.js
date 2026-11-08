@@ -10,57 +10,33 @@ export const navLinks = [
 export const services = [
   {
     id: 1,
-    title: 'Website & App Development',
-    description: 'Portfolio, business websites & scalable mobile/web applications',
+    title: 'Website Development',
+    description: 'Modern, responsive and SEO-friendly websites designed to establish your online presence and grow your business.',
     icon: 'Globe'
   },
   {
     id: 2,
-    title: 'SaaS Development',
-    description: 'Build scalable SaaS products with modern tech stacks and cloud integration',
-    icon: 'Cloud'
+    title: 'Mobile App Development',
+    description: 'User-friendly mobile applications built with modern technologies, delivering smooth performance and seamless user experiences.',
+    icon: 'Smartphone'
   },
   {
     id: 3,
-    title: 'ATS-Optimized Resumes',
-    description: 'Professional resumes engineered to pass Applicant Tracking Systems',
-    icon: 'FileText'
+    title: 'SaaS Development',
+    description: 'Scalable cloud-based software solutions with secure architecture, smart integrations and features tailored to your business needs.',
+    icon: 'Cloud'
   },
   {
     id: 4,
-    title: 'LinkedIn Branding & Optimization',
-    description: 'Stand out with a strategically crafted, high-impact LinkedIn presence',
-    icon: 'Linkedin'
+    title: 'AI Solutions & Automation',
+    description: 'Intelligent AI-powered tools and workflow automation that simplify operations, improve productivity and accelerate business growth.',
+    icon: 'Sparkles'
   },
   {
     id: 5,
-    title: 'Brand Identity & Logo Design',
-    description: 'Distinctive brand identities and logos that leave a lasting impression',
-    icon: 'Palette'
-  },
-  {
-    id: 6,
-    title: 'Google Business Profile Setup & Optimization',
-    description: 'Complete setup and optimization for maximum local search visibility',
+    title: 'Google Business Profile Optimization',
+    description: 'Professional setup and optimization to improve your local search visibility, strengthen your online presence and help customers find your business.',
     icon: 'MapPin'
-  },
-  {
-    id: 7,
-    title: 'Community & NGO Development',
-    description: 'Impactful digital solutions for communities and partner NGOs',
-    icon: 'Users'
-  },
-  {
-    id: 8,
-    title: 'Professional & Industry Training',
-    description: 'Targeted skill development programs with leading EdTech partners',
-    icon: 'GraduationCap'
-  },
-  {
-    id: 9,
-    title: 'AI-Driven Solutions',
-    description: 'Intelligent automation and AI tools for accelerated digital transformation',
-    icon: 'Sparkles'
   }
 ];
 

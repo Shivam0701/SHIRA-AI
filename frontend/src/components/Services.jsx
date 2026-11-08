@@ -2,6 +2,51 @@ import React from 'react';
 import * as LucideIcons from 'lucide-react';
 import { services } from '../mock';
 
+const ServiceCard = ({ service, index, IconComponent }) => (
+  <div
+    className="shira-card fade-in-up"
+    style={{ animationDelay: `${index * 0.1}s` }}
+  >
+    <div
+      style={{
+        width: '52px',
+        height: '52px',
+        background: 'var(--gradient-card)',
+        border: '1px solid rgba(59, 130, 246, 0.2)',
+        borderRadius: '12px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: '20px',
+      }}
+    >
+      {IconComponent && <IconComponent size={24} color="var(--brand-blue)" />}
+    </div>
+    <h3
+      className="heading-3"
+      style={{
+        marginBottom: '8px',
+        color: 'var(--text-primary)',
+        fontSize: '16px',
+        fontWeight: '600',
+        lineHeight: '1.4',
+      }}
+    >
+      {service.title}
+    </h3>
+    <p
+      className="body-small"
+      style={{
+        color: 'var(--text-secondary)',
+        fontSize: '13.5px',
+        lineHeight: '1.6',
+      }}
+    >
+      {service.description}
+    </p>
+  </div>
+);
+
 const Services = () => {
   return (
     <section id="services" className="section section-accent">
@@ -29,67 +74,22 @@ const Services = () => {
           </p>
         </div>
 
-        {/* Services Grid */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-            gap: '24px',
-          }}
-        >
-          {services.map((service, index) => {
+        {/* Services Grid — row 1: first 3 cards */}
+        <div className="services-grid-row">
+          {services.slice(0, 3).map((service, index) => {
             const IconComponent = LucideIcons[service.icon];
             return (
-              <div
-                key={service.id}
-                className="shira-card fade-in-up"
-                style={{
-                  animationDelay: `${index * 0.1}s`,
-                }}
-              >
-                {/* Icon */}
-                <div
-                  style={{
-                    width: '52px',
-                    height: '52px',
-                    background: 'var(--gradient-card)',
-                    border: '1px solid rgba(59, 130, 246, 0.2)',
-                    borderRadius: '12px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginBottom: '20px',
-                  }}
-                >
-                  {IconComponent && (
-                    <IconComponent size={24} color="var(--brand-blue)" />
-                  )}
-                </div>
+              <ServiceCard key={service.id} service={service} index={index} IconComponent={IconComponent} />
+            );
+          })}
+        </div>
 
-                {/* Content */}
-                <h3
-                  className="heading-3"
-                  style={{
-                    marginBottom: '8px',
-                    color: 'var(--text-primary)',
-                    fontSize: '16px',
-                    fontWeight: '600',
-                    lineHeight: '1.4',
-                  }}
-                >
-                  {service.title}
-                </h3>
-                <p
-                  className="body-small"
-                  style={{
-                    color: 'var(--text-secondary)',
-                    fontSize: '13.5px',
-                    lineHeight: '1.6',
-                  }}
-                >
-                  {service.description}
-                </p>
-              </div>
+        {/* Services Grid — row 2: last 2 cards centered */}
+        <div className="services-grid-row services-grid-row--centered" style={{ marginTop: '24px' }}>
+          {services.slice(3).map((service, index) => {
+            const IconComponent = LucideIcons[service.icon];
+            return (
+              <ServiceCard key={service.id} service={service} index={index + 3} IconComponent={IconComponent} />
             );
           })}
         </div>

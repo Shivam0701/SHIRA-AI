@@ -3,31 +3,28 @@ import { ExternalLink, ArrowUpRight } from 'lucide-react';
 
 const projects = [
   {
-    title:'Genzla',
-    description:'A full-stack luxury fashion platform for custom clothing and curated products with modern UI and real-world deployment.',
+    title: 'Genzla',
+    description: 'A full-stack luxury fashion platform for custom clothing and curated products with modern UI and real-world deployment.',
     link: 'https://www.genzla.com/',
     tag: 'E-Commerce + On-Demand Design'
   },
   {
     title: 'Stranger Things Inspired Portfolio',
-    description:
-      'A cinematic developer portfolio inspired by Stranger Things with immersive UI, custom animations, and storytelling.',
+    description: 'A cinematic developer portfolio inspired by Stranger Things with immersive UI, custom animations, and storytelling.',
     link: 'https://stranger-things-portfolio.vercel.app/',
     tag: 'Creative UI',
   },
   {
     title: 'Advocate Portfolio Website',
-    description:
-      'A professional legal portfolio built for trust, clarity, and conversion with a clean modern layout.',
+    description: 'A professional legal portfolio built for trust, clarity, and conversion with a clean modern layout.',
     link: 'https://adv-shivendra-kumar.vercel.app/',
     tag: 'Professional',
   },
   {
-    title: 'Real Estate Business Website',
-    description:
-      'A business-focused real estate platform showcasing listings, filters, and smooth user experience.',
-    link: 'https://real-estate-shira.vercel.app/',
-    tag: 'Business',
+    title: 'SHIRA OT Tracker',
+    description: 'A smart overtime tracking and salary management platform that helps employees record working hours, track overtime, calculate overtime earnings and manage their work schedules with ease.',
+    link: 'https://ottracker.shiraai.in',
+    tag: 'SaaS Platform',
   },
 ];
 
@@ -75,7 +72,7 @@ const Projects = () => {
                 rel="noreferrer"
                 className="btn-primary project-btn"
               >
-                View Live Project
+                Visit Project
                 <ExternalLink size={18} />
               </a>
             </article>
