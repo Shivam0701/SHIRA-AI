@@ -1,30 +1,35 @@
 import React from 'react';
 import { ExternalLink, ArrowUpRight } from 'lucide-react';
 
+const featured = {
+  title: 'SHIRA OT Tracker',
+  description:
+    'A smart overtime tracking and salary management platform that helps employees record working hours, track overtime, calculate earnings and manage work schedules effortlessly.',
+  link: 'https://ottracker.shiraai.in',
+  tag: 'SaaS Platform',
+};
+
 const projects = [
   {
     title: 'Genzla',
-    description: 'A full-stack luxury fashion platform for custom clothing and curated products with modern UI and real-world deployment.',
+    description:
+      'A full-stack luxury fashion platform for custom clothing and curated products with modern UI and real-world deployment.',
     link: 'https://www.genzla.com/',
-    tag: 'E-Commerce + On-Demand Design'
+    tag: 'E-Commerce + On-Demand Design',
   },
   {
     title: 'Stranger Things Inspired Portfolio',
-    description: 'A cinematic developer portfolio inspired by Stranger Things with immersive UI, custom animations, and storytelling.',
+    description:
+      'A cinematic developer portfolio inspired by Stranger Things with immersive UI, custom animations, and storytelling.',
     link: 'https://stranger-things-portfolio.vercel.app/',
     tag: 'Creative UI',
   },
   {
     title: 'Advocate Portfolio Website',
-    description: 'A professional legal portfolio built for trust, clarity, and conversion with a clean modern layout.',
+    description:
+      'A professional legal portfolio built for trust, clarity, and conversion with a clean modern layout.',
     link: 'https://adv-shivendra-kumar.vercel.app/',
     tag: 'Professional',
-  },
-  {
-    title: 'SHIRA OT Tracker',
-    description: 'A smart overtime tracking and salary management platform that helps employees record working hours, track overtime, calculate overtime earnings and manage their work schedules with ease.',
-    link: 'https://ottracker.shiraai.in',
-    tag: 'SaaS Platform',
   },
 ];
 
@@ -32,21 +37,44 @@ const Projects = () => {
   return (
     <section className="projects-page cinematic-page">
       <div className="shira-container">
+
         {/* HEADER */}
         <header className="projects-header cinematic-header">
           <span className="projects-eyebrow">OUR WORK</span>
-
           <h1 className="heading-1">
-            Selected <span className="gradient-text">Projects</span>
+            Explore Our <span className="gradient-text">Work</span>
           </h1>
-
           <p className="body-medium">
             A curated collection of digital products crafted with strategy,
             design, and performance in mind.
           </p>
         </header>
 
-        {/* PROJECT LIST */}
+        {/* FEATURED PROJECT */}
+        <article className="project-featured">
+          <div className="project-featured__badge">
+            <span className="project-featured__tag">{featured.tag}</span>
+            <span className="project-featured__label">Featured Project</span>
+          </div>
+
+          <h2 className="project-featured__title">
+            {featured.title}
+          </h2>
+
+          <p className="project-featured__desc">{featured.description}</p>
+
+          <a
+            href={featured.link}
+            target="_blank"
+            rel="noreferrer"
+            className="btn-primary project-btn"
+          >
+            Visit Project
+            <ExternalLink size={18} />
+          </a>
+        </article>
+
+        {/* OTHER PROJECTS */}
         <div className="projects-list">
           {projects.map((project, i) => (
             <article
@@ -54,7 +82,6 @@ const Projects = () => {
               style={{ animationDelay: `${i * 140}ms` }}
               key={i}
             >
-              {/* Card Header */}
               <div className="project-card-top">
                 <span className="project-tag">{project.tag}</span>
                 <ArrowUpRight size={18} className="project-arrow" />
@@ -62,9 +89,7 @@ const Projects = () => {
 
               <h3 className="heading-3">{project.title}</h3>
 
-              <p className="body-medium project-desc">
-                {project.description}
-              </p>
+              <p className="body-medium project-desc">{project.description}</p>
 
               <a
                 href={project.link}
@@ -82,10 +107,11 @@ const Projects = () => {
         {/* FOOTER */}
         <footer className="projects-footer cinematic-footer">
           <p className="body-medium">
-            Beyond these, we’ve built internal tools, backend systems, and
+            Beyond these, we've built internal tools, backend systems, and
             scalable digital solutions across industries.
           </p>
         </footer>
+
       </div>
     </section>
   );
