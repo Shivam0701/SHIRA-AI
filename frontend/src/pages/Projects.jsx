@@ -1,15 +1,15 @@
 import React from 'react';
-import { ExternalLink, ArrowUpRight } from 'lucide-react';
-
-const featured = {
-  title: 'SHIRA OT Tracker',
-  description:
-    'A smart overtime tracking and salary management platform that helps employees record working hours, track overtime, calculate earnings and manage work schedules effortlessly.',
-  link: 'https://ottracker.shiraai.in',
-  tag: 'SaaS Platform',
-};
+import { ExternalLink } from 'lucide-react';
 
 const projects = [
+  {
+    title: 'SHIRA OT Tracker',
+    description:
+      'A smart overtime tracking and salary management platform that helps employees record working hours, track overtime, calculate earnings and manage work schedules effortlessly.',
+    link: 'https://ottracker.shiraai.in',
+    tag: 'SaaS Platform',
+    featured: true,
+  },
   {
     title: 'Genzla',
     description:
@@ -50,53 +50,19 @@ const Projects = () => {
           </p>
         </header>
 
-        {/* FEATURED PROJECT */}
-        <article className="project-featured">
-          <div className="project-featured__badge">
-            <span className="project-featured__tag">{featured.tag}</span>
-            <span className="project-featured__label">Featured Project</span>
-          </div>
-
-          <h2 className="project-featured__title">
-            {featured.title}
-          </h2>
-
-          <p className="project-featured__desc">{featured.description}</p>
-
-          <a
-            href={featured.link}
-            target="_blank"
-            rel="noreferrer"
-            className="btn-primary project-btn"
-          >
-            Visit Project
-            <ExternalLink size={18} />
-          </a>
-        </article>
-
-        {/* OTHER PROJECTS */}
+        {/* ALL PROJECTS */}
         <div className="projects-list">
           {projects.map((project, i) => (
-            <article
-              className="project-card cinematic-card"
-              style={{ animationDelay: `${i * 140}ms` }}
-              key={i}
-            >
-              <div className="project-card-top">
-                <span className="project-tag">{project.tag}</span>
-                <ArrowUpRight size={18} className="project-arrow" />
+            <article className="project-featured" style={{ animationDelay: `${i * 120}ms` }} key={i}>
+              <div className="project-featured__badge">
+                <span className="project-featured__tag">{project.tag}</span>
+                {project.featured && (
+                  <span className="project-featured__label">Featured Project</span>
+                )}
               </div>
-
-              <h3 className="heading-3">{project.title}</h3>
-
-              <p className="body-medium project-desc">{project.description}</p>
-
-              <a
-                href={project.link}
-                target="_blank"
-                rel="noreferrer"
-                className="btn-primary project-btn"
-              >
+              <h2 className="project-featured__title">{project.title}</h2>
+              <p className="project-featured__desc">{project.description}</p>
+              <a href={project.link} target="_blank" rel="noreferrer" className="btn-primary project-btn">
                 Visit Project
                 <ExternalLink size={18} />
               </a>
