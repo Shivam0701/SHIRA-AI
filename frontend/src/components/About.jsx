@@ -84,7 +84,7 @@ export default function About() {
                 { n: 'AI', sub: 'Powered Core' },
                 { n: '100%', sub: 'Custom Built' },
                 { n: '24/7', sub: 'Support' },
-                { n: '2024', sub: 'Est.' },
+                { n: 'India', sub: 'New Delhi' },
               ].map(({ n, sub }) => (
                 <motion.div
                   key={sub}

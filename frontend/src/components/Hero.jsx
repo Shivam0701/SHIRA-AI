@@ -1,11 +1,7 @@
-import React, { useEffect, useRef, Suspense, useState } from 'react';
+import React, { useRef, Suspense, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDown, ArrowRight } from 'lucide-react';
 import HeroScene from './HeroScene';
-
-const isMobile = () =>
-  typeof window !== 'undefined' &&
-  (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || window.innerWidth < 768);
 
 const word = (text, delay) => (
   <span style={{ overflow: 'hidden', display: 'block' }}>
@@ -45,28 +41,24 @@ const MagBtn = ({ children, className, onClick, href, target }) => {
 export { MagBtn };
 
 export default function Hero() {
-  const [show3D, setShow3D] = useState(false);
+  const [sceneReady, setSceneReady] = useState(false);
   const scrollTo = (id) => document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' });
-
-  useEffect(() => {
-    // Defer 3D load, skip on mobile/low-end
-    if (!isMobile()) {
-      const t = setTimeout(() => setShow3D(true), 100);
-      return () => clearTimeout(t);
-    }
-  }, []);
 
   return (
     <section className="hero-root">
-      {/* 3D Canvas — desktop only */}
-      {show3D && (
-        <Suspense fallback={<div className="hero-canvas-fallback" />}>
-          <HeroScene />
-        </Suspense>
-      )}
+      {/* Gradient fallback — always visible underneath, fades out when 3D ready */}
+      <div className={`hero-mobile-bg${sceneReady ? ' hero-mobile-bg--hidden' : ''}`} aria-hidden="true" />
 
-      {/* Mobile fallback bg */}
-      {!show3D && <div className="hero-mobile-bg" aria-hidden="true" />}
+      {/* 3D Canvas — loads immediately, shown on all devices */}
+      <Suspense fallback={null}>
+        <div
+          className="hero-canvas-wrap"
+          style={{ opacity: sceneReady ? 1 : 0, transition: 'opacity 0.8s ease' }}
+          onTransitionEnd={() => {}}
+        >
+          <HeroScene onReady={() => setSceneReady(true)} />
+        </div>
+      </Suspense>
 
       {/* Overlay vignette */}
       <div className="hero-vignette" aria-hidden="true" />
